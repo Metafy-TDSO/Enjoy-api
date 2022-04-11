@@ -3,6 +3,8 @@ import { FastifyRequest, FastifyReply } from 'fastify'
 
 import { SignUpDto } from '@modules/users/dtos'
 
+import { HttpError } from 'errors/http.errors'
+
 import { SignUpUseCase } from './signup.use-case'
 
 export class SignUpController {
@@ -14,8 +16,10 @@ export class SignUpController {
     try {
       plainToInstance(SignUpDto, input)
     } catch (err) {
-      return reply.status(401).send({
-        message: (err as Error).message || 'Invalid Arguments provided.'
+      const { code, message } = err as HttpError
+
+      return reply.status(code ?? 400).send({
+        message: message || 'Invalid Arguments provided.'
       })
     }
 
@@ -24,8 +28,10 @@ export class SignUpController {
 
       return await reply.status(201).send(result)
     } catch (err) {
-      return reply.status(400).send({
-        message: (err as Error).message || 'Unexpected error.'
+      const { code, message } = err as HttpError
+
+      return reply.status(code ?? 400).send({
+        message: message || 'Unexpected error.'
       })
     }
   }

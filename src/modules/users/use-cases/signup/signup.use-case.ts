@@ -2,6 +2,7 @@ import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 
 import { JWT_SECRET } from '@constants/envs'
+import { BadRequestError } from 'errors/http.errors'
 
 import { SignUpDto } from '../../dtos'
 import { User } from '../../models'
@@ -16,7 +17,7 @@ export class SignUpUseCase {
     const numberOfEmails = await this.userRepository.exists({ email })
 
     if (numberOfEmails) {
-      throw new Error('Usuário já existe')
+      throw BadRequestError('This user already exists.')
     }
 
     const hashedPassword = await bcrypt.hash(password, 10)
