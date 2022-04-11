@@ -19,11 +19,11 @@ export class LoginController {
       const dto = plainToInstance(LoginDto, input)
       await validateOrReject(dto)
     } catch (err) {
-      const errors = formatValidationErrors(err as ValidationError[])
+      const invalidArguments = formatValidationErrors(err as ValidationError[])
 
       return reply.status(400).send({
-        message: 'Invalid Arguments provided.',
-        errors
+        message: 'Invalid arguments provided.',
+        invalidArguments
       })
     }
 
