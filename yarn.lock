@@ -506,6 +506,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/voca@npm:^1.4.2":
+  version: 1.4.2
+  resolution: "@types/voca@npm:1.4.2"
+  checksum: fcd16acbae4e2856462875715f8f0c131e125342359afcff6108a32ce6419f8b68fd427ace0f575a1c04243bbdd3b3c8403fc4a44d455cd25b6e410d53ea2df9
+  languageName: node
+  linkType: hard
+
 "@typescript-eslint/eslint-plugin@npm:^5.18.0":
   version: 5.18.0
   resolution: "@typescript-eslint/eslint-plugin@npm:5.18.0"
@@ -1930,6 +1937,7 @@ __metadata:
     "@prisma/client": ^3.12.0
     "@types/bcryptjs": ^2.4.2
     "@types/jsonwebtoken": ^8.5.8
+    "@types/voca": ^1.4.2
     "@typescript-eslint/eslint-plugin": ^5.18.0
     "@typescript-eslint/parser": ^5.18.0
     bcryptjs: ^2.4.3
@@ -1956,6 +1964,7 @@ __metadata:
     ts-node: ^10.7.0
     tsconfig-paths: ^3.14.1
     typescript: ^4.6.3
+    voca: ^1.4.0
   languageName: unknown
   linkType: soft
 
@@ -5067,6 +5076,13 @@ __metadata:
   version: 1.1.2
   resolution: "vary@npm:1.1.2"
   checksum: ae0123222c6df65b437669d63dfa8c36cee20a504101b2fcd97b8bf76f91259c17f9f2b4d70a1e3c6bbcee7f51b28392833adb6b2770b23b01abec84e369660b
+  languageName: node
+  linkType: hard
+
+"voca@npm:^1.4.0":
+  version: 1.4.0
+  resolution: "voca@npm:1.4.0"
+  checksum: f3d30b03519b0ed060ce1d5b4b14f5fe1174f03b2e553ebee6c4ee996e722ac9ecf71a2fa7bf6d88f739b7dec61c1c06318f6f6e4f52c80a091b3e18602b9533
   languageName: node
   linkType: hard
 
