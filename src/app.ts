@@ -1,3 +1,5 @@
+import 'reflect-metadata'
+
 import fastify from 'fastify'
 import { IS_DEV } from './constants/envs'
 import cors from 'fastify-cors'
