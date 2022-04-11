@@ -1,0 +1,26 @@
+# Builds
+/build
+/dist
+
+# Envs
+.env
+
+# Dependencies
+node_modules
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+# !.yarn/cache
+.pnp.*
+
+# IDEs and editors
+.eslintcache
+
+# Misc
+/connect.lock
+/coverage
+npm-debug.log
+yarn-error.log
