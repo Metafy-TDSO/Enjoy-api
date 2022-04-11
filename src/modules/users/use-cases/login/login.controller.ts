@@ -1,9 +1,11 @@
 import { plainToInstance } from 'class-transformer'
+import { validateOrReject, ValidationError } from 'class-validator'
 import { FastifyRequest, FastifyReply } from 'fastify'
 
 import { LoginDto } from '@modules/users/dtos'
 
 import { HttpError } from '@errors/http.errors'
+import { formatValidationErrors } from 'utils/format-errors.util'
 
 import { LoginUseCase } from './login.use-case'
 
@@ -14,12 +16,14 @@ export class LoginController {
     const input = request.body as LoginDto
 
     try {
-      plainToInstance(LoginDto, input)
+      const dto = plainToInstance(LoginDto, input)
+      await validateOrReject(dto)
     } catch (err) {
-      const { code, message } = err as HttpError
+      const errors = formatValidationErrors(err as ValidationError[])
 
-      return reply.status(code ?? 400).send({
-        message: message || 'Invalid Arguments provided.'
+      return reply.status(400).send({
+        message: 'Invalid Arguments provided.',
+        errors
       })
     }
 
