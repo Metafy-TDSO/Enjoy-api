@@ -5,7 +5,7 @@ import { SignUpDto } from '@modules/users/dtos'
 
 import { SignUpUseCase } from './signup.use-case'
 
-export class CreateUserController {
+export class SignUpController {
   constructor(private signUpUseCase: SignUpUseCase) {}
 
   async handle(request: FastifyRequest, reply: FastifyReply): Promise<FastifyReply> {
