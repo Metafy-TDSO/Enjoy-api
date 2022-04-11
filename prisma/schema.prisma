@@ -36,7 +36,6 @@ model Event {
   location    Unsupported("GEOMETRY") @map("lc_localizacao")
 
   @@index([idCreator], map: "idx_evento_id_criador")
-  @@index([location], map: "idx_evento_localizacao")
   @@map("tbl_evento")
 }
 

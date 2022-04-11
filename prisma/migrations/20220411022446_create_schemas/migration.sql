@@ -24,7 +24,6 @@ CREATE TABLE `tbl_evento` (
     `lc_localizacao` GEOMETRY NOT NULL,
 
     INDEX `idx_evento_id_criador`(`id_criador`),
-    INDEX `idx_evento_localizacao`(`lc_localizacao`),
     PRIMARY KEY (`id_evento`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
