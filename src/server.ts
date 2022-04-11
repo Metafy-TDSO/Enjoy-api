@@ -1,8 +1,6 @@
 import { app } from './app'
 import { PORT } from './constants/envs'
 
-app.listen(PORT, (err, address) => {
+app.listen(PORT, err => {
   if (err) throw err
-
-  app.log.info(`Server running on ${address}`)
 })
