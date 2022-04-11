@@ -21,4 +21,4 @@ export const app = fastify({
 app.register(cors, { allowedHeaders: '*' })
 app.register(helmet)
 
-app.register(userRouter, { prefix: '/user' })
+app.register(userRouter, { prefix: '/users' })
