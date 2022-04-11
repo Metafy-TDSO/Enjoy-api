@@ -20,10 +20,7 @@ export class SignUpDto {
   @MaxLength(72)
   email!: string
 
-  @IsDateString(
-    { format: 'DD/MM/YYYY' },
-    { message: 'Insert a valid date in the format: DD/MM/YYYY!' }
-  )
+  @IsDateString({}, { message: 'Insert a valid date in the format: YYYY-MM-DD!' })
   birth!: Date
 
   @IsString({ message: 'Insert a valid password!' })
