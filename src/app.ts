@@ -2,17 +2,16 @@ import 'reflect-metadata'
 
 import fastify from 'fastify'
 import cors from 'fastify-cors'
-import gracefullyShutDown from 'fastify-graceful-shutdown'
 import helmet from 'fastify-helmet'
 import swagger from 'fastify-swagger'
 
 import { userRouter } from '@modules/users'
 
-import { IS_DEV } from './constants/envs'
+import { IS_PROD } from './constants/envs'
 
 export const app = fastify({
   logger: {
-    prettyPrint: IS_DEV
+    prettyPrint: !IS_PROD
       ? {
           translateTime: 'HH:MM:ss Z',
           ignore: 'pid,hostname'
@@ -23,7 +22,7 @@ export const app = fastify({
 
 app.register(cors, { allowedHeaders: '*' })
 app.register(helmet)
-app.register(gracefullyShutDown)
+
 app.register(swagger, {
   routePrefix: '/documentation',
   swagger: {
