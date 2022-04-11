@@ -1,6 +1,6 @@
 import { IsDateString, IsEmail, IsOptional, IsString, Matches, MaxLength } from 'class-validator'
 
-import { createStringRequirements } from 'utils/regexp.utils'
+import { createStringRequirements } from 'utils/regexp.util'
 
 export class SignUpDto {
   @IsString()
