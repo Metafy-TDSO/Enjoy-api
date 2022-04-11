@@ -1,4 +1,4 @@
-import { FastifyInstance } from 'fastify'
+import { FastifyPluginCallback } from 'fastify'
 
 import { UserRepository } from './repositories'
 import { LoginController, LoginUseCase } from './use-cases/login'
@@ -11,7 +11,9 @@ const userRepository = new UserRepository()
 const signUpUseCase = new SignUpUseCase(userRepository)
 const loginUseCase = new LoginUseCase(userRepository)
 
-export const userRouter = (app: FastifyInstance) => {
+export const userRouter: FastifyPluginCallback = (app, _opts, done) => {
   app.post('/signup', async (req, rep) => new SignUpController(signUpUseCase).handle(req, rep))
   app.post('/login', async (req, rep) => new LoginController(loginUseCase).handle(req, rep))
+
+  done()
 }
