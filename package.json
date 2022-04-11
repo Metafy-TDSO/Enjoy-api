@@ -2,7 +2,7 @@
   "name": "eventos-v1",
   "packageManager": "yarn@3.2.0",
   "scripts": {
-    "dev": "nodemon --watch 'src/' --exec 'ts-node src/server.ts' -e ts",
+    "dev": "nodemon --watch 'src/' --exec 'yarn ts-node src/server.ts' -e ts",
     "prisma:generate": "prisma generate",
     "studio": "prisma studio",
     "db:migrate": "prisma migrate dev",
