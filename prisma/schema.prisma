@@ -8,13 +8,13 @@ datasource db {
 }
 
 model Creator {
-  id        Int      @default(autoincrement()) @map("id_criador")
-  idUser    Int      @map("id_usuario")
-  rating    Int?     @map("vl_avaliacao")
-  user      User     @relation(fields: [idUser], references: [id], onDelete: Cascade, map: "fk_criador_usuario")
+  id        Int       @default(autoincrement()) @map("id_criador")
+  idUser    Int       @map("id_usuario")
+  rating    Int?      @map("vl_avaliacao")
+  user      User      @relation(fields: [idUser], references: [id], onDelete: Cascade, map: "fk_criador_usuario")
   event     Event[]
-  createdAt DateTime @default(now()) @map("dt_criacao") @db.DateTime(0)
-  updatedAt DateTime @updatedAt @map("dt_mudanca") @db.DateTime(0)
+  createdAt DateTime  @default(now()) @map("dt_criacao") @db.DateTime(0)
+  updatedAt DateTime? @updatedAt @map("dt_mudanca") @db.DateTime(0)
 
   @@id([id, idUser])
   @@index([idUser], map: "idx_criador_usuario_id_usuario")
@@ -32,7 +32,7 @@ model Event {
   creator     Creator                 @relation(fields: [idCreator], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_evento_criador")
   userEvent   UserEvent[]
   createdAt   DateTime?               @default(now()) @map("dt_criacao") @db.DateTime(0)
-  updatedAt   DateTime                @updatedAt @map("dt_mudanca") @db.DateTime(0)
+  updatedAt   DateTime?               @updatedAt @map("dt_mudanca") @db.DateTime(0)
   location    Unsupported("GEOMETRY") @map("lc_localizacao")
 
   @@index([idCreator], map: "idx_evento_id_criador")
@@ -50,7 +50,7 @@ model User {
   creator   Creator[]
   userEvent UserEvent[]
   createdAt DateTime?   @default(now()) @map("dt_criacao") @db.DateTime(0)
-  updatedAt DateTime    @updatedAt @map("dt_mudanca") @db.DateTime(0)
+  updatedAt DateTime?   @updatedAt @map("dt_mudanca") @db.DateTime(0)
 
   @@index([name], map: "ds_nome")
   @@index([email], map: "ds_email")
@@ -58,12 +58,12 @@ model User {
 }
 
 model UserEvent {
-  idUser    Int      @map("id_usuario")
-  idEvent   Int      @map("id_evento")
-  event     Event    @relation(fields: [idEvent], references: [id], onDelete: Cascade, map: "fk_evento_usuario")
-  user      User     @relation(fields: [idUser], references: [id], onDelete: Cascade, map: "fk_usuario_evento")
-  createdAt DateTime @default(now()) @map("dt_criacao") @db.DateTime(0)
-  updatedAt DateTime @updatedAt @map("dt_mudanca") @db.DateTime(0)
+  idUser    Int       @map("id_usuario")
+  idEvent   Int       @map("id_evento")
+  event     Event     @relation(fields: [idEvent], references: [id], onDelete: Cascade, map: "fk_evento_usuario")
+  user      User      @relation(fields: [idUser], references: [id], onDelete: Cascade, map: "fk_usuario_evento")
+  createdAt DateTime? @default(now()) @map("dt_criacao") @db.DateTime(0)
+  updatedAt DateTime? @updatedAt @map("dt_mudanca") @db.DateTime(0)
 
   @@id([idUser, idEvent])
   @@index([idEvent], map: "idx_usuario_evento_id_evento")
