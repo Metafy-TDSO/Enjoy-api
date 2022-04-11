@@ -1,0 +1,73 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Creator {
+  id        Int      @default(autoincrement()) @map("id_criador")
+  idUser    Int      @map("id_usuario")
+  rating    Int?     @map("vl_avaliacao")
+  user      User     @relation(fields: [idUser], references: [id], onDelete: Cascade, map: "fk_criador_usuario")
+  event     Event[]
+  createdAt DateTime @default(now()) @map("dt_criacao") @db.DateTime(0)
+  updatedAt DateTime @updatedAt @map("dt_mudanca") @db.DateTime(0)
+
+  @@id([id, idUser])
+  @@index([idUser], map: "idx_criador_usuario_id_usuario")
+  @@map("tbl_criador")
+}
+
+model Event {
+  id          Int                     @id() @default(autoincrement()) @map("id_evento")
+  name        String                  @map("ds_nome")
+  description String                  @map("ds_descricao") @db.VarChar(255)
+  rating      Int?                    @map("vl_avaliacao") @db.TinyInt
+  startAt     DateTime                @map("dt_inicio") @db.DateTime(0)
+  endsAt      DateTime                @map("dt_fim") @db.DateTime(0)
+  idCreator   Int                     @map("id_criador")
+  creator     Creator                 @relation(fields: [idCreator], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_evento_criador")
+  userEvent   UserEvent[]
+  createdAt   DateTime?               @default(now()) @map("dt_criacao") @db.DateTime(0)
+  updatedAt   DateTime                @updatedAt @map("dt_mudanca") @db.DateTime(0)
+  location    Unsupported("GEOMETRY") @map("lc_localizacao")
+
+  @@index([idCreator], map: "idx_evento_id_criador")
+  @@index([location], map: "idx_evento_localizacao")
+  @@map("tbl_evento")
+}
+
+model User {
+  id        Int         @id @default(autoincrement()) @map("id_usuario")
+  name      String      @map("ds_nome") @db.VarChar(72)
+  email     String      @unique(map: "ds_email_unique") @map("ds_email") @db.VarChar(255)
+  birth     DateTime    @map("dt_nascimento") @db.Date
+  password  String      @map("ds_senha") @db.VarChar(72)
+  avatarUrl String?     @map("im_avatar_url") @db.VarChar(200)
+  phone     String      @map("nr_telefone") @db.VarChar(11)
+  creator   Creator[]
+  userEvent UserEvent[]
+  createdAt DateTime?   @default(now()) @map("dt_criacao") @db.DateTime(0)
+  updatedAt DateTime    @updatedAt @map("dt_mudanca") @db.DateTime(0)
+
+  @@index([name], map: "ds_nome")
+  @@index([email], map: "ds_email")
+  @@map("tbl_usuario")
+}
+
+model UserEvent {
+  idUser    Int      @map("id_usuario")
+  idEvent   Int      @map("id_evento")
+  event     Event    @relation(fields: [idEvent], references: [id], onDelete: Cascade, map: "fk_evento_usuario")
+  user      User     @relation(fields: [idUser], references: [id], onDelete: Cascade, map: "fk_usuario_evento")
+  createdAt DateTime @default(now()) @map("dt_criacao") @db.DateTime(0)
+  updatedAt DateTime @updatedAt @map("dt_mudanca") @db.DateTime(0)
+
+  @@id([idUser, idEvent])
+  @@index([idEvent], map: "idx_usuario_evento_id_evento")
+  @@index([idUser], map: "idx_usuario_evento_id_usuario")
+  @@map("tbl_usuario_evento")
+}
