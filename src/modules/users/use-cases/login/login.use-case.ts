@@ -18,7 +18,7 @@ export class LoginUseCase {
     const foundUser = await this.userRepository.findByEmail(email)
 
     if (!foundUser) {
-      throw NotFoundError('User not found')
+      throw NotFoundError('User not found.')
     }
 
     const { id, name, password: hashedPassword, ...userWithoutPassword } = foundUser
@@ -26,7 +26,7 @@ export class LoginUseCase {
     const comparedPassword = await bcrypt.compare(password, hashedPassword)
 
     if (!comparedPassword) {
-      throw BadRequestError('Wrong password')
+      throw BadRequestError('Wrong password.')
     }
 
     const token = jwt.sign(
