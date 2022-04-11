@@ -7,7 +7,7 @@ import { UserRepository } from '../../repositories'
 export class SignUpUseCase {
   constructor(private readonly userRepository: UserRepository) {}
 
-  async execute(input: SignUpDto): Promise<User> {
+  async execute(input: SignUpDto): Promise<{ user: Omit<User, 'password'> }> {
     const { email, password, confirmPassword, birth, ...userInput } = input
 
     const numberOfEmails = await this.userRepository.exists({ email })
@@ -25,6 +25,10 @@ export class SignUpUseCase {
       ...userInput
     })
 
-    return createdUser
+    const { password: createdPassword, ...userWithoutPassword } = createdUser
+
+    return {
+      user: userWithoutPassword
+    }
   }
 }
