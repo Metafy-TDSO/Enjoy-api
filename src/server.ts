@@ -1,5 +1,5 @@
 import { app } from './app'
-import { PORT } from './constants/envs'
+import { PORT } from './common/constants/envs'
 
 app.listen(PORT, err => {
   if (err) throw err

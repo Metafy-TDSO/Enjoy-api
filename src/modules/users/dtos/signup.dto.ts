@@ -9,7 +9,7 @@ import {
   MaxLength
 } from 'class-validator'
 
-import { createStringRequirements } from 'utils/regexp.util'
+import { createStringRequirements } from '@common/utils/regexp.util'
 
 export class SignUpDto {
   @IsString({ message: 'Insert a valid name!' })

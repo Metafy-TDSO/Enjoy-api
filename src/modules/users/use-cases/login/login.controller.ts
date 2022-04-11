@@ -4,8 +4,8 @@ import { FastifyRequest, FastifyReply } from 'fastify'
 
 import { LoginDto } from '@modules/users/dtos'
 
-import { HttpError } from '@errors/http.errors'
-import { formatValidationErrors } from 'utils/format-errors.util'
+import { HttpError } from '@common/errors/http.errors'
+import { formatValidationErrors } from '@common/utils/format-errors.util'
 
 import { LoginUseCase } from './login.use-case'
 

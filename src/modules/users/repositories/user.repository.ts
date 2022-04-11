@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client'
 
-import { prisma } from '@database'
+import { prisma } from '@common/database'
 
 import { User } from '../models'
 

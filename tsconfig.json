@@ -24,17 +24,11 @@
     "isolatedModules": false,
     "incremental": false,
     "paths": {
-      "@database": [
-        "database/index.ts"
-      ],
-      "@constants/*": [
-        "constants/*"
+      "@common/*": [
+        "common/*"
       ],
       "@modules/*": [
         "modules/*"
-      ],
-      "@errors/*": [
-        "errors/*"
       ]
     }
   },

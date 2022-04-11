@@ -1,11 +1,11 @@
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 
+import { JWT_SECRET } from '@common/constants/envs'
+import { BadRequestError, NotFoundError } from '@common/errors/http.errors'
+
 import { LoginDto } from '@modules/users/dtos'
 import { UserRepository } from '@modules/users/repositories'
-
-import { JWT_SECRET } from '@constants/envs'
-import { BadRequestError, NotFoundError } from '@errors/http.errors'
 
 import { User } from '../../models'
 

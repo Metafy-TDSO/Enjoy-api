@@ -1,8 +1,8 @@
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 
-import { JWT_SECRET } from '@constants/envs'
-import { BadRequestError } from '@errors/http.errors'
+import { JWT_SECRET } from '@common/constants/envs'
+import { BadRequestError } from '@common/errors/http.errors'
 
 import { SignUpDto } from '../../dtos'
 import { User } from '../../models'

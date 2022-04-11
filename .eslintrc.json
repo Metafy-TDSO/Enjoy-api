@@ -189,6 +189,11 @@
         ],
         "pathGroups": [
           {
+            "pattern": "@common/**",
+            "group": "internal",
+            "position": "before"
+          },
+          {
             "pattern": "@modules/**",
             "group": "internal",
             "position": "before"
