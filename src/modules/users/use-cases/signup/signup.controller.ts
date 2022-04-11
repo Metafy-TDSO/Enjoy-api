@@ -22,7 +22,7 @@ export class SignUpController {
     try {
       const result = await this.signUpUseCase.execute(input)
 
-      return await reply.status(200).send(result)
+      return await reply.status(201).send(result)
     } catch (err) {
       return reply.status(400).send({
         message: (err as Error).message || 'Unexpected error.'

@@ -1,4 +1,7 @@
 import bcrypt from 'bcryptjs'
+import jwt from 'jsonwebtoken'
+
+import { JWT_SECRET } from '@constants/envs'
 
 import { SignUpDto } from '../../dtos'
 import { User } from '../../models'
@@ -7,8 +10,8 @@ import { UserRepository } from '../../repositories'
 export class SignUpUseCase {
   constructor(private readonly userRepository: UserRepository) {}
 
-  async execute(input: SignUpDto): Promise<{ user: Omit<User, 'password'> }> {
-    const { email, password, confirmPassword, birth, ...userInput } = input
+  async execute(input: SignUpDto): Promise<{ user: Omit<User, 'password'>; token: string }> {
+    const { email, name, password, confirmPassword, birth, ...userInput } = input
 
     const numberOfEmails = await this.userRepository.exists({ email })
 
@@ -20,15 +23,30 @@ export class SignUpUseCase {
 
     const createdUser = await this.userRepository.save({
       email,
+      name,
       password: hashedPassword,
       birth: new Date(birth),
       ...userInput
     })
 
-    const { password: createdPassword, ...userWithoutPassword } = createdUser
+    const { id, password: createdPassword, ...userWithoutPassword } = createdUser
+
+    const signedToken = jwt.sign(
+      {
+        id,
+        name,
+        email
+      },
+      JWT_SECRET,
+      {
+        issuer: 'metafy',
+        expiresIn: '1m'
+      }
+    )
 
     return {
-      user: userWithoutPassword
+      user: { id, ...userWithoutPassword },
+      token: signedToken
     }
   }
 }
