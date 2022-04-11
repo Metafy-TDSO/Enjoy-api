@@ -1,2 +1,3 @@
 export const IS_DEV = process.env.NODE_ENV === 'development'
 export const PORT = Number(process.env.PORT ?? 3000)
+export const JWT_SECRET = process.env.SECRET ?? 'secret123'
