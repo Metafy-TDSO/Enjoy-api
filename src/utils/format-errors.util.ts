@@ -1,22 +1,16 @@
 import { ValidationError } from 'class-validator'
-import v from 'voca'
 
-interface Obj<T = unknown> {
-  [key: string]: T
+interface ErrorResponse {
+  [key: string]: string[]
 }
 
-export const formatValidationErrors = (errors: ValidationError[]): Obj => {
-  const response: Obj = {}
+export const formatValidationErrors = (errors: ValidationError[]): ErrorResponse => {
+  const response: ErrorResponse = {}
 
   errors.forEach(({ property, constraints }) => {
-    const constraintsEntries = Object.entries(constraints ?? {})
+    const constraintsValue = Object.values(constraints ?? {})
 
-    const normalCaseConstraintKeys = constraintsEntries.map(([key, value]) => [
-      v.capitalize(key.replace(/([A-Z])/g, ' $1'), true),
-      v.capitalize(value)
-    ])
-
-    response[property] = Object.fromEntries(normalCaseConstraintKeys)
+    response[property] = constraintsValue
   })
 
   return response
