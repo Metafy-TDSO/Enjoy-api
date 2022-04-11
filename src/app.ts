@@ -41,23 +41,6 @@ app.register(swagger, {
       { name: 'events', description: 'Endpoints relacionados aos Eventos' },
       { name: 'creators', description: 'Endpoints relacionados aos Criadores de Eventos' }
     ],
-    definitions: {
-      User: {
-        type: 'object',
-        required: ['id', 'name', 'email', 'birth', 'password', 'phone'],
-        properties: {
-          id: { type: 'integer' },
-          name: { type: 'string', example: 'Guilherme Vieira' },
-          email: { type: 'string', format: 'email', example: 'example@gmail.com' },
-          birth: { type: 'string', format: 'date', example: '2002-08-02' },
-          password: { type: 'string', format: 'password', example: 'Guigui123##' },
-          phone: { type: 'string', minLength: 11, maxLength: 10, example: '11912345678' },
-          avatarUrl: { type: 'string', format: 'uri' },
-          createdAt: { type: 'string', format: 'date-time', example: '2022-04-11' },
-          updatedAt: { type: 'string', format: 'date-time', default: null, example: '2022-04-11' }
-        }
-      }
-    },
     securityDefinitions: {
       token: {
         type: 'apiKey',
@@ -70,3 +53,10 @@ app.register(swagger, {
   staticCSP: true,
   exposeRoute: true
 })
+
+app.addSchema({
+  $id: 'Error',
+  type: 'string'
+})
+
+app.register(userRouter, { prefix: '/users' })
