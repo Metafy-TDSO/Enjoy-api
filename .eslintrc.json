@@ -9,7 +9,6 @@
     "airbnb-typescript/base",
     "plugin:import/typescript",
     "prettier",
-    "plugin:jest/recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:@typescript-eslint/recommended-requiring-type-checking"
   ],
@@ -25,8 +24,7 @@
   "plugins": [
     "import",
     "prettier",
-    "@typescript-eslint",
-    "jest"
+    "@typescript-eslint"
   ],
   "settings": {
     "import/parsers": {
@@ -190,11 +188,6 @@
           "index"
         ],
         "pathGroups": [
-          {
-            "pattern": "@common/**",
-            "group": "internal",
-            "position": "before"
-          },
           {
             "pattern": "@modules/**",
             "group": "internal",
