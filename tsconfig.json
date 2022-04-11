@@ -32,6 +32,9 @@
       ],
       "@modules/*": [
         "modules/*"
+      ],
+      "@errors/*": [
+        "errors/*"
       ]
     }
   },

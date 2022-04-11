@@ -5,7 +5,7 @@ import { LoginDto } from '@modules/users/dtos'
 import { UserRepository } from '@modules/users/repositories'
 
 import { JWT_SECRET } from '@constants/envs'
-import { BadRequestError, NotFoundError } from 'errors/http.errors'
+import { BadRequestError, NotFoundError } from '@errors/http.errors'
 
 import { User } from '../../models'
 

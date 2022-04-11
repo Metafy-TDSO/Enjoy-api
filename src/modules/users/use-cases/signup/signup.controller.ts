@@ -3,7 +3,7 @@ import { FastifyRequest, FastifyReply } from 'fastify'
 
 import { SignUpDto } from '@modules/users/dtos'
 
-import { HttpError } from 'errors/http.errors'
+import { HttpError } from '@errors/http.errors'
 
 import { SignUpUseCase } from './signup.use-case'
 
