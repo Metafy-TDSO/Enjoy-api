@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  install:
+  build:
     runs-on: ubuntu-latest
 
     strategy:
