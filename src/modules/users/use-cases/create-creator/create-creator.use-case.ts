@@ -11,7 +11,7 @@ export class CreateCreatorUseCase {
   ) {}
 
   async execute(input: CreateCreatorDto): Promise<{ creator: Creator }> {
-    const { idUser } = input
+    const idUser = Number(input.idUser)
 
     const userExists = await this.userRepository.exists({ id: idUser })
 
