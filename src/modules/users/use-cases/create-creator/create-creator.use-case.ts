@@ -21,7 +21,7 @@ export class CreateCreatorUseCase {
 
     const creatorExists = await this.creatorRepository.exists({ idUser })
 
-    if (!creatorExists) {
+    if (creatorExists) {
       throw BadRequestError('This user already is a creator.')
     }
 
