@@ -2,20 +2,20 @@
   "name": "eventos-v1",
   "packageManager": "yarn@3.2.0",
   "scripts": {
+    "prebuild": "rimraf dist",
+    "build": "tsc -p ./tsconfig.build.json",
     "dev": "nodemon --watch 'src/' --exec 'yarn ts-node -r tsconfig-paths/register --files src/server.ts' -e ts",
-    "prisma:generate": "prisma generate",
-    "studio": "prisma studio",
-    "db:migrate": "prisma migrate dev",
-    "db:deploy": "prisma migrate deploy",
-    "prisma:migrate:init": "prisma migrate dev --name init",
+    "start": "TS_NODE_BASEURL=./dist node -r tsconfig-paths/register dist/server.js",
     "typecheck": "tsc",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "eslint src/**/*.ts --fix",
-    "prebuild": "rimraf dist",
-    "build": "tsc -p ./tsconfig.build.json",
     "docker:up": "docker compose up -d --build",
     "docker:down": "docker compose down",
-    "start": "TS_NODE_BASEURL=./dist node -r tsconfig-paths/register dist/server.js"
+    "prisma:generate": "prisma generate",
+    "db:migrate": "prisma migrate dev",
+    "db:deploy": "prisma migrate deploy",
+    "prisma:migrate:init": "prisma migrate dev --name init",
+    "studio": "prisma studio"
   },
   "devDependencies": {
     "@commitlint/cli": "^16.2.3",
