@@ -10,18 +10,21 @@ export const authenticationMiddleware: preHandlerAsyncHookHandler = async (req, 
   const { authorization: authHeader } = req.headers
 
   if (!authHeader) {
+    req.log.warn('User without header')
     return rep.status(401).send('You are not authenticated!')
   }
 
   const splittedHeader = authHeader.split(' ')
 
   if (!splittedHeader[1]) {
+    req.log.warn(`User doesn't provided the token, just the prefix`)
     return rep.status(400).send('The given token is malformed!')
   }
 
   const [, token] = splittedHeader
 
   if (!isJWT(token)) {
+    req.log.warn(`User didn't give a valid token`)
     return rep.status(401).send('You must give a valid token!')
   }
 
@@ -29,15 +32,15 @@ export const authenticationMiddleware: preHandlerAsyncHookHandler = async (req, 
     const validatedToken = jwt.verify(token, JWT_SECRET, { issuer: 'metafy' })
 
     const { id, name, email } = validatedToken as Pick<User, 'id' | 'name' | 'email'>
+    req.log.info({ validatedToken }, 'Validated token')
 
     req.user = {
       id,
       name,
       email
     }
-
-    rep.status(200).send(req.user)
   } catch (err) {
+    req.log.error({ error: (err as Error).message }, 'Token invalid')
     return rep.status(400).send('You must give a valid and not expired token!')
   }
 }
