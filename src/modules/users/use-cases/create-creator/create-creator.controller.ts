@@ -13,10 +13,10 @@ export class CreateCreatorController {
   constructor(private createCreatorUseCase: CreateCreatorUseCase) {}
 
   async handle(request: FastifyRequest, reply: FastifyReply): Promise<FastifyReply> {
-    const input = request.body as CreateCreatorDto
+    const queries = request.query as CreateCreatorDto
 
     try {
-      const dto = plainToInstance(CreateCreatorDto, input)
+      const dto = plainToInstance(CreateCreatorDto, queries)
       await validateOrReject(dto)
     } catch (err) {
       const invalidArguments = formatValidationErrors(err as ValidationError[])
@@ -28,7 +28,7 @@ export class CreateCreatorController {
     }
 
     try {
-      const result = await this.createCreatorUseCase.execute(input)
+      const result = await this.createCreatorUseCase.execute(queries)
 
       return await reply.status(201).send(result)
     } catch (err) {
