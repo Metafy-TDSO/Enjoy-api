@@ -38,7 +38,7 @@ export class LoginUseCase {
       JWT_SECRET,
       {
         issuer: 'metafy',
-        expiresIn: '1m'
+        expiresIn: '7d'
       }
     )
 
