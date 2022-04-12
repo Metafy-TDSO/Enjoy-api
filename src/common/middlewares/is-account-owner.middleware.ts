@@ -20,6 +20,4 @@ export const isAccountOwnerMiddleware: preHandlerAsyncHookHandler = async (req, 
     )
     return rep.status(403).send('You are not allowed to do this action!')
   }
-
-  return rep.status(200).send({ authenticated: true })
 }
