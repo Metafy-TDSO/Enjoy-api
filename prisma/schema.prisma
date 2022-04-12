@@ -8,7 +8,7 @@ datasource db {
 }
 
 model Creator {
-  id        Int       @default(autoincrement()) @map("id_criador")
+  id        Int       @id @default(autoincrement()) @map("id_criador")
   idUser    Int       @unique @map("id_usuario")
   rating    Int?      @map("vl_avaliacao")
   user      User      @relation(fields: [idUser], references: [id], onDelete: Cascade, map: "fk_criador_usuario")
@@ -16,7 +16,6 @@ model Creator {
   createdAt DateTime  @default(now()) @map("dt_criacao") @db.DateTime(0)
   updatedAt DateTime? @updatedAt @map("dt_mudanca") @db.DateTime(0)
 
-  @@id([id, idUser])
   @@index([idUser], map: "idx_criador_usuario_id_usuario")
   @@map("tbl_criador")
 }
