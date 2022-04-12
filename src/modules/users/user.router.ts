@@ -1,5 +1,7 @@
 import { FastifyPluginCallback } from 'fastify'
 
+import { authenticationMiddleware, isAccountOwnerMiddleware } from '@common/middlewares'
+
 import { CreatorRepository, UserRepository } from './repositories'
 import { CreateCreatorController, CreateCreatorUseCase } from './use-cases/create-creator'
 import { LoginController, LoginUseCase } from './use-cases/login'
@@ -18,8 +20,10 @@ export const userRouter: FastifyPluginCallback = (app, _opts, done) => {
   app.post('/signup', async (req, rep) => new SignUpController(signUpUseCase).handle(req, rep))
   app.post('/login', async (req, rep) => new LoginController(loginUseCase).handle(req, rep))
 
-  app.post('/:idUser/creator', async (req, rep) =>
-    new CreateCreatorController(createCreatorUseCase).handle(req, rep)
+  app.post(
+    '/:idUser/creator',
+    { preHandler: [authenticationMiddleware, isAccountOwnerMiddleware] },
+    async (req, rep) => new CreateCreatorController(createCreatorUseCase).handle(req, rep)
   )
 
   done()
