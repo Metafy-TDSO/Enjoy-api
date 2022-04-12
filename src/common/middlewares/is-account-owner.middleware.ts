@@ -5,7 +5,7 @@ export const isAccountOwnerMiddleware: preHandlerAsyncHookHandler = async (req, 
 
   if (!req.user) {
     req.log.warn({ user: req.user }, 'User not authenticated')
-    return rep.status(401).send('You are not authenticated!')
+    return rep.status(401).send({ message: 'You are not authenticated!' })
   }
 
   const { id } = req.user
@@ -18,6 +18,6 @@ export const isAccountOwnerMiddleware: preHandlerAsyncHookHandler = async (req, 
       },
       'User is not the account owner'
     )
-    return rep.status(403).send('You are not allowed to do this action!')
+    return rep.status(403).send({ message: 'You are not allowed to do this action!' })
   }
 }

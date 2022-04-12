@@ -11,21 +11,21 @@ export const authenticationMiddleware: preHandlerAsyncHookHandler = async (req, 
 
   if (!authHeader) {
     req.log.warn('User without header')
-    return rep.status(401).send('You are not authenticated!')
+    return rep.status(401).send({ message: 'You are not authenticated!' })
   }
 
   const splittedHeader = authHeader.split(' ')
 
   if (!splittedHeader[1]) {
     req.log.warn(`User doesn't provided the token, just the prefix`)
-    return rep.status(400).send('The given token is malformed!')
+    return rep.status(400).send({ message: 'The given token is malformed!' })
   }
 
   const [, token] = splittedHeader
 
   if (!isJWT(token)) {
     req.log.warn(`User didn't give a valid token`)
-    return rep.status(401).send('You must give a valid token!')
+    return rep.status(401).send({ message: 'You must give a valid token!' })
   }
 
   try {
@@ -41,6 +41,6 @@ export const authenticationMiddleware: preHandlerAsyncHookHandler = async (req, 
     }
   } catch (err) {
     req.log.error({ error: (err as Error).message }, 'Token invalid')
-    return rep.status(400).send('You must give a valid and not expired token!')
+    return rep.status(400).send({ message: 'You must give a valid and not expired token!' })
   }
 }
