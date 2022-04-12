@@ -9,7 +9,7 @@ datasource db {
 
 model Creator {
   id        Int       @default(autoincrement()) @map("id_criador")
-  idUser    Int       @map("id_usuario")
+  idUser    Int       @unique @map("id_usuario")
   rating    Int?      @map("vl_avaliacao")
   user      User      @relation(fields: [idUser], references: [id], onDelete: Cascade, map: "fk_criador_usuario")
   event     Event[]
@@ -47,7 +47,7 @@ model User {
   password  String      @map("ds_senha") @db.VarChar(72)
   avatarUrl String?     @map("im_avatar_url") @db.VarChar(200)
   phone     String      @map("nr_telefone") @db.VarChar(11)
-  creator   Creator[]
+  creator   Creator?
   userEvent UserEvent[]
   createdAt DateTime?   @default(now()) @map("dt_criacao") @db.DateTime(0)
   updatedAt DateTime?   @updatedAt @map("dt_mudanca") @db.DateTime(0)
