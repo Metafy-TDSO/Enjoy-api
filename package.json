@@ -11,7 +11,7 @@
     "typecheck": "tsc",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "eslint src/**/*.ts --fix",
-    "prebuild": "rimraf build",
+    "prebuild": "rimraf dist",
     "build": "tsc -p ./tsconfig.build.json",
     "docker:up": "docker compose up -d --build",
     "docker:down": "docker compose down",
