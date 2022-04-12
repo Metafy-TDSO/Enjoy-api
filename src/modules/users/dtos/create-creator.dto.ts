@@ -2,5 +2,5 @@ import { IsNumber } from 'class-validator'
 
 export class CreateCreatorDto {
   @IsNumber()
-  userId!: number
+  idUser!: number
 }
