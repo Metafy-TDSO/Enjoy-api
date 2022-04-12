@@ -2,10 +2,10 @@ import { plainToInstance } from 'class-transformer'
 import { validateOrReject, ValidationError } from 'class-validator'
 import { FastifyRequest, FastifyReply } from 'fastify'
 
-import { LoginDto } from '@modules/users/dtos'
-
 import { HttpError } from '@common/errors/http.errors'
 import { formatValidationErrors } from '@common/utils/format-errors.util'
+
+import { LoginDto } from '@modules/users/dtos'
 
 import { LoginUseCase } from './login.use-case'
 
