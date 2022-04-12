@@ -13,7 +13,7 @@ export class CreateCreatorController {
   constructor(private createCreatorUseCase: CreateCreatorUseCase) {}
 
   async handle(request: FastifyRequest, reply: FastifyReply): Promise<FastifyReply> {
-    const queries = request.query as CreateCreatorDto
+    const queries = request.params as CreateCreatorDto
 
     try {
       const dto = plainToInstance(CreateCreatorDto, queries)

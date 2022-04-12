@@ -1,7 +1,7 @@
 import { preHandlerAsyncHookHandler } from 'fastify'
 
 export const isAccountOwnerMiddleware: preHandlerAsyncHookHandler = async (req, rep) => {
-  const { idUser } = req.query as { idUser: number }
+  const { idUser } = req.params as { idUser: number }
 
   if (!req.user) {
     req.log.warn({ user: req.user }, 'User not authenticated')
