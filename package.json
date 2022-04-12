@@ -14,7 +14,8 @@
     "prebuild": "rimraf build",
     "build": "tsc -p ./tsconfig.build.json",
     "docker:up": "docker compose up -d --build",
-    "docker:down": "docker compose down"
+    "docker:down": "docker compose down",
+    "start": "TS_NODE_BASEURL=./dist node -r tsconfig-paths/register dist/server.js"
   },
   "devDependencies": {
     "@commitlint/cli": "^16.2.3",
