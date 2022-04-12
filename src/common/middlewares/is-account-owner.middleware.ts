@@ -10,7 +10,7 @@ export const isAccountOwnerMiddleware: preHandlerAsyncHookHandler = async (req, 
 
   const { id } = req.user
 
-  if (id !== idUser) {
+  if (id !== Number(idUser)) {
     req.log.warn(
       {
         id,
