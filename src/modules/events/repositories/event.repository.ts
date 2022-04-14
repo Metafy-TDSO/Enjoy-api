@@ -3,12 +3,16 @@ import { Prisma, PrismaClient } from '@prisma/client'
 import { prisma } from '@common/database'
 import { OmitDbAttrs } from '@common/types/omit-db-attrs.type'
 
+import { Creator, User } from '@modules/users/models'
+
 import { Event } from '../models'
 
-interface Location {
+export interface Location {
   latitude: number
   longitude: number
 }
+
+export type JoinedEventCreator = Event & { creator: Pick<Creator, 'rating'>; user: User }
 
 export class EventRepository {
   private prisma: PrismaClient = prisma
@@ -19,10 +23,31 @@ export class EventRepository {
     return event
   }
 
-  async findAll(where: Prisma.EventWhereInput): Promise<Event[]> {
-    const events = await this.prisma.event.findMany({ where })
+  async findAll({
+    limit,
+    page,
+    where
+  }: {
+    where?: Prisma.EventWhereInput
+    page: number
+    limit: number
+  }): Promise<JoinedEventCreator[]> {
+    const events = await this.prisma.event.findMany({
+      where,
+      include: { creator: { select: { rating: true }, include: { user: true } } },
+      skip: limit * (page - 1),
+      take: limit
+    })
 
-    return events
+    const serializedEvents = events.map(({ creator, ...eventInput }) => ({
+      user: creator.user,
+      creator: {
+        rating: creator.rating
+      },
+      ...eventInput
+    }))
+
+    return serializedEvents
   }
 
   async exists({ id, idCreator }: { id?: number; idCreator?: number }) {
@@ -37,11 +62,14 @@ export class EventRepository {
   }: {
     meters?: number
     userLocation: Location
-  }) {
+  }): Promise<JoinedEventCreator[]> {
     const userGeoPoint = `ST_GeomFromText('POINT(${latitude} ${longitude})', 4326)`
 
-    const foundEvents = await this.prisma.$queryRaw<Event[]>`
-      SELECT * from tbl_evento WHERE ST_Distance(${userGeoPoint}, lc_localizacao, 'metre') <= ${meters}
+    const foundEvents = await this.prisma.$queryRaw<JoinedEventCreator[]>`
+      SELECT event.*, creator.vl_avaliacao, user.* FROM tbl_evento event
+      INNER JOIN tbl_criador creator ON event.id_criador = creator.id_criador
+      INNER JOIN tbl_usuario user ON creator.id_usuario = user.id_usuario
+      WHERE ST_Distance(${userGeoPoint}, event.lc_localizacao, 'metre') <= ${meters}
     `
 
     return foundEvents
