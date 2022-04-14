@@ -3,7 +3,9 @@ import 'reflect-metadata'
 import fastify from 'fastify'
 import cors from 'fastify-cors'
 import helmet from 'fastify-helmet'
-import websocket from 'fastify-websocket'
+import socketio from 'fastify-socket.io'
+
+import { WsGateway } from '@modules/gateways'
 
 import { IS_PROD } from './common/constants/envs'
 import { creatorRouter } from './modules/creators'
@@ -23,10 +25,14 @@ export const app = fastify({
 
 app.register(cors, { allowedHeaders: '*' })
 app.register(helmet)
-app.register(websocket, {
-  options: { maxPayload: 1048576 }
-})
+app.register(socketio, { cors: { allowedHeaders: '*' } })
 
 app.register(userRouter, { prefix: '/users' })
 app.register(creatorRouter, { prefix: '/creator' })
 app.register(eventRouter, { prefix: '/events' })
+
+app.ready().then(() => {
+  const gateway = WsGateway.getInstance()
+  app.io.on('connection', socket => gateway.onConnection({ io: app.io, socket }))
+  app.io.on('disconnection', () => gateway.onDisconnection())
+})
