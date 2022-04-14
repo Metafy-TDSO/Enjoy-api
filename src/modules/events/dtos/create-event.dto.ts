@@ -1,5 +1,5 @@
 import {
-  IsDate,
+  IsDateString,
   IsLatitude,
   IsLongitude,
   IsNumberString,
@@ -18,11 +18,11 @@ export class CreateEventDto {
   @MaxLength(255)
   description!: string
 
-  @IsDate()
-  startAt!: Date
+  @IsDateString()
+  startAt!: string
 
-  @IsDate()
-  endsAt!: Date
+  @IsDateString()
+  endsAt!: string
 
   @IsLatitude()
   latitude!: number
