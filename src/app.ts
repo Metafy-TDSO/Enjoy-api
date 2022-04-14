@@ -3,6 +3,7 @@ import 'reflect-metadata'
 import fastify from 'fastify'
 import cors from 'fastify-cors'
 import helmet from 'fastify-helmet'
+import websocket from 'fastify-websocket'
 
 import { IS_PROD } from './common/constants/envs'
 import { creatorRouter } from './modules/creators'
@@ -22,6 +23,9 @@ export const app = fastify({
 
 app.register(cors, { allowedHeaders: '*' })
 app.register(helmet)
+app.register(websocket, {
+  options: { maxPayload: 1048576 }
+})
 
 app.register(userRouter, { prefix: '/users' })
 app.register(creatorRouter, { prefix: '/creator' })
