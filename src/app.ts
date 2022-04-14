@@ -5,6 +5,7 @@ import cors from 'fastify-cors'
 import helmet from 'fastify-helmet'
 
 import { IS_PROD } from './common/constants/envs'
+import { creatorRouter } from './modules/creators'
 import { eventRouter } from './modules/events'
 import { userRouter } from './modules/users'
 
@@ -23,4 +24,5 @@ app.register(cors, { allowedHeaders: '*' })
 app.register(helmet)
 
 app.register(userRouter, { prefix: '/users' })
+app.register(creatorRouter, { prefix: '/creator' })
 app.register(eventRouter, { prefix: '/events' })
