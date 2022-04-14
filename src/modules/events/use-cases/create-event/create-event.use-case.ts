@@ -13,7 +13,7 @@ export class CreateEventUseCase {
   ) {}
 
   async execute(input: CreateEventDto): Promise<{ event: Event }> {
-    const { idCreator, ...eventInput } = input
+    const { idCreator, startAt, endsAt, ...eventInput } = input
 
     const creatorExists = await this.creatorRepository.exists({ id: Number(idCreator) })
 
@@ -23,6 +23,8 @@ export class CreateEventUseCase {
 
     const createdEvent = await this.eventRepository.save({
       idCreator: Number(idCreator),
+      startAt: new Date(startAt),
+      endsAt: new Date(endsAt),
       ...eventInput
     })
 
