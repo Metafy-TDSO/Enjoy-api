@@ -9,7 +9,7 @@ import {
 
 export class CreateEventDto {
   @IsNumberString()
-  idCreator!: number
+  idCreator!: string
 
   @IsString()
   name!: string
