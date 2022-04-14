@@ -1,6 +1,6 @@
 import { FastifyPluginCallback } from 'fastify'
 
-import { authenticationMiddleware, isAccountOwnerMiddleware } from '@common/middlewares'
+import { authenticationMiddleware } from '@common/middlewares'
 
 import { EventRepository } from '@modules/events/repositories'
 import { CreateEventUseCase, CreateEventController } from '@modules/events/use-cases'
@@ -14,10 +14,8 @@ const creatorRepository = new CreatorRepository()
 const createEventUseCase = new CreateEventUseCase(eventRepository, creatorRepository)
 
 export const creatorRouter: FastifyPluginCallback = (app, _opts, done) => {
-  app.post(
-    '/:idCreator/event',
-    { preHandler: [authenticationMiddleware, isAccountOwnerMiddleware] },
-    async (req, rep) => new CreateEventController(createEventUseCase).handle(req, rep)
+  app.post('/:idCreator/event', { preHandler: [authenticationMiddleware] }, async (req, rep) =>
+    new CreateEventController(createEventUseCase).handle(req, rep)
   )
 
   done()
