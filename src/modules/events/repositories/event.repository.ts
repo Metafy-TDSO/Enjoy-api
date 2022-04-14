@@ -64,7 +64,12 @@ export class EventRepository {
         VALUES (${name}, ${description}, ${startAt.toISOString()}, ${endsAt.toISOString()}, ${idCreator}, ${geoPoints})
       `
 
-      const createdEvent = await this.prisma.event.findFirst({ where: { idCreator, name } })
+      const createdEvent = await this.prisma.$queryRaw<Event>`
+        SELECT * FROM tbl_evento 
+        WHERE id_evento=(
+          SELECT max(id_evento) FROM tbl_evento
+        )
+      `
 
       return createdEvent
     } catch (error) {
