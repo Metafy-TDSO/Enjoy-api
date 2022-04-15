@@ -1,20 +1,42 @@
 import { Socket, Server } from 'socket.io'
+import { EventParams } from 'socket.io/dist/typed-events'
 
-import { EventsHandler } from './handlers'
+import { Location } from '@modules/events/models'
+import { EventRepository } from '@modules/events/repositories'
+import { FindManyEventsUseCase } from '@modules/events/use-cases'
+
+import { EventHandlerEvents, EventsHandler } from './handlers'
+
+// Repositories
+const eventRepository = new EventRepository()
+
+// Use Cases
+const findManyEventsUseCase = new FindManyEventsUseCase(eventRepository)
+
+type ServerToClientEvents = EventHandlerEvents
+
+type ClientToServerEvents = EventHandlerEvents
+
+interface SocketData extends Location {
+  id: string
+  name: number
+  avatarUrl: string
+}
 
 export class WsGateway {
   private static instance: WsGateway
 
-  private io!: Server
+  protected io!: Server<ClientToServerEvents, ServerToClientEvents, any, SocketData>
 
-  private socket!: Socket
-
-  private eventHandler: EventsHandler = new EventsHandler()
+  protected socket!: Socket
 
   protected activeSessions: Set<string> = new Set()
 
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  private constructor() {}
+  private readonly eventHandler: EventsHandler = new EventsHandler(
+    this.io,
+    this.socket,
+    findManyEventsUseCase
+  )
 
   public static getInstance(): WsGateway {
     if (!WsGateway.instance) {
@@ -35,5 +57,13 @@ export class WsGateway {
   public onDisconnection() {
     console.log('User disconnected:', this.socket.id)
     this.activeSessions.delete(this.socket.id)
+  }
+
+  public publishEvent<T extends keyof ServerToClientEvents>(
+    event: T,
+    ...args: EventParams<ServerToClientEvents, T>
+  ) {
+    console.log('Event emitted:', event)
+    this.io.emit(event, ...args)
   }
 }
