@@ -1,3 +1,5 @@
+import { Prisma } from '@prisma/client'
+
 export interface Event {
   id: number
   name: string
@@ -5,8 +7,8 @@ export interface Event {
   rating?: number | null
   startAt: Date
   endsAt: Date
-  latitude: number
-  longitude: number
+  latitude: Prisma.Decimal
+  longitude: Prisma.Decimal
   address: string
   idCreator: number
   createdAt?: Date | null
