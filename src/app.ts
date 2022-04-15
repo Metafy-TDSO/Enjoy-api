@@ -34,5 +34,5 @@ app.register(eventRouter, { prefix: '/events' })
 app.ready().then(() => {
   const gateway = WsGateway.getInstance()
   app.io.on('connection', socket => gateway.onConnection({ io: app.io, socket }))
-  app.io.on('disconnection', () => gateway.onDisconnection())
+  app.io.on('disconnect', () => gateway.onDisconnection())
 })
