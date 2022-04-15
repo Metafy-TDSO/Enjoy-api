@@ -1,7 +1,7 @@
-import { User } from '@modules/users/models'
+import { JUser } from '@common/models/JUser'
 
 declare module 'fastify' {
   interface FastifyRequest {
-    user?: Pick<User, 'id' | 'name' | 'email'>
+    user?: JUser
   }
 }
