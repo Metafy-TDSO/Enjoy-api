@@ -1,4 +1,5 @@
-import { IsLatLong, IsNumber, IsOptional, IsString, Max, Min } from 'class-validator'
+import { Prisma } from '@prisma/client'
+import { IsLatitude, IsLongitude, IsNumber, IsOptional, IsString, Max, Min } from 'class-validator'
 
 export class FindManyEventsDto {
   @IsNumber()
@@ -19,9 +20,13 @@ export class FindManyEventsDto {
   @IsOptional()
   idCreator?: number
 
-  @IsLatLong()
+  @IsLatitude()
   @IsOptional()
-  userLatLong?: string
+  latitude?: Prisma.Decimal
+
+  @IsLongitude()
+  @IsOptional()
+  longitude?: Prisma.Decimal
 
   @IsNumber()
   @Max(5)
