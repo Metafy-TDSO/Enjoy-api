@@ -6,14 +6,11 @@ export class FindManyEventsUseCase {
   constructor(private readonly eventRepository: EventRepository) {}
 
   async execute(input: FindManyEventsDto): Promise<{ events: JoinedEventCreator[] }> {
-    const { limit, page, userLatLong, idCreator, name, rating } = input
+    const { limit, page, latitude, longitude, idCreator, name, rating } = input
 
-    if (userLatLong) {
-      const [latitude, longitude] = userLatLong.split(' ')
-      const userLocation = { latitude: Number(latitude), longitude: Number(longitude) }
-
+    if (latitude && longitude) {
       const foundEvents = await this.eventRepository.findAllEventsInRadius({
-        userLocation
+        userLocation: { latitude, longitude }
       })
 
       return {
