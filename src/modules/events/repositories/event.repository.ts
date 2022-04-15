@@ -1,10 +1,4 @@
-import {
-  Prisma,
-  PrismaClient,
-  Event as PrismaEvent,
-  Creator as PrismaCreator,
-  User as PrismaUser
-} from '@prisma/client'
+import { Prisma, PrismaClient } from '@prisma/client'
 
 import { prisma } from '@common/database'
 import { OmitDbAttrs } from '@common/types/omit-db-attrs.type'
@@ -13,27 +7,31 @@ import { Creator, User } from '@modules/users/models'
 
 import { Event, Location } from '../models'
 
-export type JoinedEventCreator = Event & {
-  creator: Pick<Creator, 'rating'> & Pick<User, 'id' | 'avatarUrl' | 'name'>
-}
+export type JoinedEventCreator =
+  | (Event & {
+      creator: Pick<Creator, 'rating'> & { user: Pick<User, 'id' | 'name' | 'avatarUrl'> }
+    })
+  | {}
 
-function serializePrismaEvent(
-  event: PrismaEvent & {
-    creator: PrismaCreator & {
-      user: PrismaUser
-    }
-  }
-): JoinedEventCreator {
-  const { creator, ...eventInput } = event
-  const { id: userId, name: userName, avatarUrl: userAvatar } = creator.user
-
-  return {
-    ...eventInput,
-    creator: {
-      rating: creator.rating,
-      id: userId,
-      name: userName,
-      avatarUrl: userAvatar
+const defaultFindManyEventsSelect: Prisma.EventSelect = {
+  id: true,
+  name: true,
+  description: true,
+  address: true,
+  idCreator: true,
+  latitude: true,
+  longitude: true,
+  rating: true,
+  endsAt: true,
+  startAt: true,
+  createdAt: true,
+  updatedAt: true,
+  creator: {
+    select: {
+      rating: true,
+      user: {
+        select: { id: true, name: true, avatarUrl: true }
+      }
     }
   }
 }
@@ -50,22 +48,22 @@ export class EventRepository {
   async findAll({
     limit,
     page,
-    where
+    where,
+    select = defaultFindManyEventsSelect
   }: {
     where?: Prisma.EventWhereInput
     page: number
     limit: number
+    select?: Prisma.EventSelect
   }): Promise<JoinedEventCreator[]> {
     const events = await this.prisma.event.findMany({
       where,
-      include: { creator: { include: { user: true } } },
       skip: limit * (page - 1),
-      take: limit
+      take: limit,
+      select
     })
 
-    const serializedEvents: JoinedEventCreator[] = events.map(serializePrismaEvent)
-
-    return serializedEvents
+    return events
   }
 
   async exists({ id, idCreator }: { id?: number; idCreator?: number }) {
@@ -76,10 +74,12 @@ export class EventRepository {
 
   async findAllEventsInRadius({
     kilometers = 10,
-    userLocation: { latitude, longitude }
+    userLocation: { latitude, longitude },
+    select = defaultFindManyEventsSelect
   }: {
     kilometers?: number
     userLocation: Location
+    select?: Prisma.EventSelect
   }): Promise<JoinedEventCreator[]> {
     const foundNearEvents = await this.prisma.$queryRaw<Array<{ id: number; distance: number }>>`
       SELECT id_evento AS id, ( 6371 * 
@@ -100,12 +100,10 @@ export class EventRepository {
 
     const foundEvents = await this.prisma.event.findMany({
       where: { id: { in: eventIds } },
-      include: { creator: { include: { user: true } } }
+      select
     })
 
-    const serializedEvents = foundEvents.map(serializePrismaEvent)
-
-    return serializedEvents
+    return foundEvents
   }
 
   async save(eventInput: OmitDbAttrs<Event>): Promise<Event> {
