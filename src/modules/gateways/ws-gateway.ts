@@ -4,13 +4,14 @@ import { EventParams } from 'socket.io/dist/typed-events'
 import { EventRepository } from '@modules/events/repositories'
 import { FindManyEventsUseCase } from '@modules/events/use-cases'
 
+// eslint-disable-next-line import/no-cycle
 import { EventsHandler } from './handlers'
 import { ServerIoData, ServerToClientEvents, SocketData, SocketIoData } from './types/socket.type'
 
 // Repositories
 const eventRepository = new EventRepository()
 
-// Use Cases
+// UseCases
 const findManyEventsUseCase = new FindManyEventsUseCase(eventRepository)
 
 export class WsGateway {
@@ -22,11 +23,7 @@ export class WsGateway {
 
   protected activeSessions: Map<string, Partial<SocketData>> = new Map()
 
-  private readonly eventHandler: EventsHandler = new EventsHandler(
-    this.io,
-    this.socket,
-    findManyEventsUseCase
-  )
+  private eventHandler!: EventsHandler
 
   public static getInstance(): WsGateway {
     if (!WsGateway.instance) {
@@ -39,6 +36,7 @@ export class WsGateway {
   public onConnection({ io, socket }: { io: Server; socket: Socket }) {
     this.io = io
     this.socket = socket
+    this.eventHandler = new EventsHandler(io, socket, findManyEventsUseCase)
 
     console.log('User connected:', socket.id)
     this.activeSessions.set(socket.id, socket.data)
@@ -59,7 +57,9 @@ export class WsGateway {
   }
 
   private handleIncomingEvents() {
-    this.socket.on('client:event:search-near', this.eventHandler.searchCloseEvents)
+    this.socket.on('client:event:search-near', message =>
+      this.eventHandler.searchCloseEvents(message)
+    )
     this.socket.on('disconnect', () => this.onDisconnection())
   }
 }

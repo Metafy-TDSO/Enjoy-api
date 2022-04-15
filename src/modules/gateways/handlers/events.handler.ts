@@ -5,8 +5,8 @@ import { ServerIoData, SocketIoData } from '../types/socket.type'
 
 export class EventsHandler {
   constructor(
-    private io: ServerIoData,
-    private socket: SocketIoData,
+    private readonly io: ServerIoData,
+    private readonly socket: SocketIoData,
     private readonly findManyEventsUseCase: FindManyEventsUseCase
   ) {}
 
