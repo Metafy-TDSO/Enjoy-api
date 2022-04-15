@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken'
 
 import { JWT_SECRET } from '@common/constants/envs'
 import { BadRequestError } from '@common/errors/http.errors'
+import { JUser } from '@common/models'
 
 import { SignUpDto } from '../../dtos'
 import { User } from '../../models'
@@ -30,14 +31,15 @@ export class SignUpUseCase {
       ...userInput
     })
 
-    const { id, password: createdPassword, ...userWithoutPassword } = createdUser
+    const { id, password: createdPassword, avatarUrl, ...userWithoutPassword } = createdUser
 
     const signedToken = jwt.sign(
       {
         id,
         name,
-        email
-      },
+        email,
+        avatarUrl
+      } as JUser,
       JWT_SECRET,
       {
         issuer: 'metafy',
