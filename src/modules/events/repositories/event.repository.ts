@@ -11,12 +11,7 @@ import { OmitDbAttrs } from '@common/types/omit-db-attrs.type'
 
 import { Creator, User } from '@modules/users/models'
 
-import { Event } from '../models'
-
-export interface Location {
-  latitude: Prisma.Decimal
-  longitude: Prisma.Decimal
-}
+import { Event, Location } from '../models'
 
 export type JoinedEventCreator = Event & {
   creator: Pick<Creator, 'rating'>
