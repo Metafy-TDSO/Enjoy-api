@@ -1,6 +1,7 @@
 import { PrismaClient } from '@prisma/client'
 
 import { prisma } from '@common/database'
+import { OmitDbAttrs } from '@common/types/omit-db-attrs.type'
 
 import { Creator } from '../models'
 
@@ -19,7 +20,7 @@ export class CreatorRepository {
     return creator
   }
 
-  async save(creator: Omit<Creator, 'id' | 'updatedAt' | 'createdAt'>): Promise<Creator> {
+  async save(creator: OmitDbAttrs<Creator>): Promise<Creator> {
     return this.prisma.creator.create({ data: creator })
   }
 
