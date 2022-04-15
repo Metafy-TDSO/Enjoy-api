@@ -6,7 +6,7 @@ import { JWT_SECRET } from '@common/constants/envs'
 import { UnauthenticatedError, BadRequestError } from '@common/errors/http.errors'
 import { JUser } from '@common/models/JUser'
 
-import { SocketIoData } from '../ws-gateway'
+import { SocketIoData } from '../types/socket.type'
 
 export const wsAuthenticationMiddleware = (
   socket: SocketIoData,
