@@ -36,5 +36,4 @@ app.ready().then(() => {
   const gateway = WsGateway.getInstance()
   app.io.use(wsAuthenticationMiddleware)
   app.io.on('connection', socket => gateway.onConnection({ io: app.io, socket }))
-  app.io.on('disconnect', () => gateway.onDisconnection())
 })

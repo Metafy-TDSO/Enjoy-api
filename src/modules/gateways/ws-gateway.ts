@@ -60,5 +60,6 @@ export class WsGateway {
 
   private handleIncomingEvents() {
     this.socket.on('client:event:search-near', this.eventHandler.searchCloseEvents)
+    this.socket.on('disconnect', () => this.onDisconnection())
   }
 }
