@@ -5,12 +5,12 @@ export class FindManyEventsDto {
   @IsNumber()
   @Min(1)
   @IsOptional()
-  page = 1
+  page?: number
 
   @IsNumber()
   @Min(1)
   @IsOptional()
-  limit = 50
+  limit?: number
 
   @IsString()
   @IsOptional()
@@ -27,6 +27,10 @@ export class FindManyEventsDto {
   @IsLongitude()
   @IsOptional()
   longitude?: Prisma.Decimal
+
+  @IsNumber()
+  @IsOptional()
+  kilometers?: number
 
   @IsNumber()
   @Max(5)
