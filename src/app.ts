@@ -6,6 +6,7 @@ import helmet from 'fastify-helmet'
 import socketio from 'fastify-socket.io'
 
 import { WsGateway } from '@modules/gateways'
+import { wsAuthenticationMiddleware } from '@modules/gateways/middlewares'
 
 import { IS_PROD } from './common/constants/envs'
 import { creatorRouter } from './modules/creators'
@@ -33,6 +34,7 @@ app.register(eventRouter, { prefix: '/events' })
 
 app.ready().then(() => {
   const gateway = WsGateway.getInstance()
+  app.io.use(wsAuthenticationMiddleware)
   app.io.on('connection', socket => gateway.onConnection({ io: app.io, socket }))
   app.io.on('disconnect', () => gateway.onDisconnection())
 })
