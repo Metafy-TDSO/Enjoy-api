@@ -12,21 +12,24 @@ export const wsAuthenticationMiddleware = (
   socket: SocketIoData,
   next: (err?: ExtendedError | undefined) => void
 ): void => {
-  const { token: authToken } = socket.handshake.auth as { token: string }
+  const { authorization: authHeader } = socket.handshake.headers
 
-  if (!authToken) {
+  if (!authHeader) {
+    console.warn('User without header')
     return next(UnauthenticatedError('You are not authenticated!'))
   }
 
-  const splittedToken = authToken.split(' ')
+  const splittedHeader = authHeader.split(' ')
 
-  if (!splittedToken[1]) {
+  if (!splittedHeader[1]) {
+    console.warn('Token is malformed', authHeader)
     return next(BadRequestError('The given token is malformed!'))
   }
 
-  const [, token] = splittedToken
+  const [, token] = splittedHeader
 
   if (!isJWT(token)) {
+    console.warn('Token is not a jwt', token)
     return next(UnauthenticatedError('You must give a valid token!'))
   }
 
@@ -35,6 +38,7 @@ export const wsAuthenticationMiddleware = (
 
     socket.data = validatedToken
   } catch (err) {
+    console.warn('Token is invalid or expired', err)
     return next(BadRequestError('You must give a valid and not expired token!'))
   }
 }
