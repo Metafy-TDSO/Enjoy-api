@@ -1,5 +1,10 @@
-import { Prisma, PrismaClient } from '@prisma/client'
-import { startOfHour, format } from 'date-fns'
+import {
+  Prisma,
+  PrismaClient,
+  Event as PrismaEvent,
+  Creator as PrismaCreator,
+  User as PrismaUser
+} from '@prisma/client'
 
 import { prisma } from '@common/database'
 import { OmitDbAttrs } from '@common/types/omit-db-attrs.type'
@@ -13,7 +18,29 @@ export interface Location {
   longitude: number
 }
 
-export type JoinedEventCreator = Event & { creator: Pick<Creator, 'rating'>; user: User }
+export type JoinedEventCreator = Event & {
+  creator: Pick<Creator, 'rating'>
+  user: Omit<User, 'password'>
+}
+
+function serializePrismaEvent(
+  event: PrismaEvent & {
+    creator: PrismaCreator & {
+      user: PrismaUser
+    }
+  }
+): JoinedEventCreator {
+  const { creator, ...eventInput } = event
+  const { password, ...userWithoutPassword } = creator.user
+
+  return {
+    user: userWithoutPassword,
+    creator: {
+      rating: creator.rating
+    },
+    ...eventInput
+  }
+}
 
 export class EventRepository {
   private prisma: PrismaClient = prisma
@@ -40,13 +67,7 @@ export class EventRepository {
       take: limit
     })
 
-    const serializedEvents = events.map(({ creator, ...eventInput }) => ({
-      user: creator.user,
-      creator: {
-        rating: creator.rating
-      },
-      ...eventInput
-    }))
+    const serializedEvents: JoinedEventCreator[] = events.map(serializePrismaEvent)
 
     return serializedEvents
   }
@@ -58,55 +79,42 @@ export class EventRepository {
   }
 
   async findAllEventsInRadius({
-    meters = 10000,
+    kilometers = 10,
     userLocation: { latitude, longitude }
   }: {
-    meters?: number
+    kilometers?: number
     userLocation: Location
   }): Promise<JoinedEventCreator[]> {
-    const userGeoPoint = `ST_GeomFromText('POINT(${latitude} ${longitude})', 4326)`
-
-    const foundEvents = await this.prisma.$queryRaw<JoinedEventCreator[]>`
-      SELECT event.*, creator.vl_avaliacao, user.* FROM tbl_evento event
-      INNER JOIN tbl_criador creator ON event.id_criador = creator.id_criador
-      INNER JOIN tbl_usuario user ON creator.id_usuario = user.id_usuario
-      WHERE ST_Distance(${userGeoPoint}, event.lc_localizacao, 'metre') <= ${meters}
+    const foundNearEvents = await this.prisma.$queryRaw<Array<{ id: number; distance: number }>>`
+      SELECT id_evento AS id, ( 6371 * 
+      ACOS( 
+          COS( RADIANS( latitude ) ) * 
+          COS( RADIANS( ${latitude} ) ) * 
+          COS( RADIANS( ${longitude} ) - 
+          RADIANS( longitude ) ) + 
+          SIN( RADIANS( latitude ) ) * 
+          SIN( RADIANS( ${latitude}) ) 
+      ) ) AS distance
+      FROM 
+        tbl_evento
+      HAVING distance <= ${kilometers}
     `
 
-    return foundEvents
+    const eventIds = foundNearEvents.map(({ id }) => id)
+
+    const foundEvents = await this.prisma.event.findMany({
+      where: { id: { in: eventIds } },
+      include: { creator: { include: { user: true } } }
+    })
+
+    const serializedEvents = foundEvents.map(serializePrismaEvent)
+
+    return serializedEvents
   }
 
-  async save({
-    description,
-    endsAt,
-    idCreator,
-    latitude,
-    longitude,
-    name,
-    startAt
-  }: OmitDbAttrs<Omit<Event, 'localization'>> & Location): Promise<Event | null> {
-    try {
-      const geoPoints = `ST_GeomFromText('POINT(${latitude} ${longitude})', 4326)`
+  async save(eventInput: OmitDbAttrs<Event>): Promise<Event> {
+    const createdEvent = await this.prisma.event.create({ data: eventInput })
 
-      const formatedStartDate = format(startOfHour(new Date(startAt)), 'yyyy-MM-dd hh:mm:ss')
-      const formatedEndDate = format(startOfHour(new Date(endsAt)), 'yyyy-MM-dd hh:mm:ss')
-
-      await this.prisma.$executeRaw`
-        INSERT INTO tbl_evento (ds_nome, ds_descricao, dt_inicio, dt_fim, id_criador, lc_localizacao) 
-        VALUES (${name}, ${description}, ${formatedStartDate}, ${formatedEndDate}, ${idCreator}, ${geoPoints})
-      `
-
-      const createdEvent = await this.prisma.$queryRaw<Event>`
-        SELECT * FROM tbl_evento 
-        WHERE id_evento=(
-          SELECT max(id_evento) FROM tbl_evento
-        )
-      `
-
-      return createdEvent
-    } catch (error) {
-      console.log(error)
-      return null
-    }
+    return createdEvent
   }
 }
