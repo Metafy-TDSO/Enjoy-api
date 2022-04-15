@@ -1,11 +1,11 @@
 import { Socket, Server } from 'socket.io'
 import { EventParams } from 'socket.io/dist/typed-events'
 
-import { Location } from '@modules/events/models'
 import { EventRepository } from '@modules/events/repositories'
 import { FindManyEventsUseCase } from '@modules/events/use-cases'
 
-import { EventHandlerEvents, EventsHandler } from './handlers'
+import { EventsHandler } from './handlers'
+import { ServerIoData, ServerToClientEvents, SocketData, SocketIoData } from './types/socket.type'
 
 // Repositories
 const eventRepository = new EventRepository()
@@ -13,24 +13,14 @@ const eventRepository = new EventRepository()
 // Use Cases
 const findManyEventsUseCase = new FindManyEventsUseCase(eventRepository)
 
-type ServerToClientEvents = EventHandlerEvents
-
-type ClientToServerEvents = EventHandlerEvents
-
-interface SocketData extends Location {
-  id: string
-  name: number
-  avatarUrl: string
-}
-
 export class WsGateway {
   private static instance: WsGateway
 
-  protected io!: Server<ClientToServerEvents, ServerToClientEvents, any, SocketData>
+  protected io!: ServerIoData
 
-  protected socket!: Socket
+  protected socket!: SocketIoData
 
-  protected activeSessions: Set<string> = new Set()
+  protected activeSessions: Map<string, Partial<SocketData>> = new Map()
 
   private readonly eventHandler: EventsHandler = new EventsHandler(
     this.io,
@@ -50,8 +40,9 @@ export class WsGateway {
     this.io = io
     this.socket = socket
 
-    console.log('User connected:', this.socket.id)
-    this.activeSessions.add(socket.id)
+    console.log('User connected:', socket.id)
+    this.activeSessions.set(socket.id, socket.data)
+    this.handleIncomingEvents()
   }
 
   public onDisconnection() {
@@ -65,5 +56,9 @@ export class WsGateway {
   ) {
     console.log('Event emitted:', event)
     this.io.emit(event, ...args)
+  }
+
+  private handleIncomingEvents() {
+    this.socket.on('client:event:search-near', this.eventHandler.searchCloseEvents)
   }
 }
