@@ -21,18 +21,20 @@ model Creator {
 }
 
 model Event {
-  id          Int                     @id() @default(autoincrement()) @map("id_evento")
-  name        String                  @map("ds_nome")
-  description String                  @map("ds_descricao") @db.VarChar(255)
-  rating      Int?                    @map("vl_avaliacao") @db.TinyInt
-  startAt     DateTime                @map("dt_inicio") @db.DateTime(0)
-  endsAt      DateTime                @map("dt_fim") @db.DateTime(0)
-  idCreator   Int                     @map("id_criador")
-  creator     Creator                 @relation(fields: [idCreator], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_evento_criador")
+  id          Int         @id() @default(autoincrement()) @map("id_evento")
+  name        String      @map("ds_nome")
+  description String      @map("ds_descricao") @db.VarChar(255)
+  rating      Int?        @map("vl_avaliacao") @db.TinyInt
+  startAt     DateTime    @map("dt_inicio") @db.DateTime(0)
+  endsAt      DateTime    @map("dt_fim") @db.DateTime(0)
+  idCreator   Int         @map("id_criador")
+  creator     Creator     @relation(fields: [idCreator], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_evento_criador")
+  latitude    Decimal     @map("vl_latitude") @db.Decimal(11, 7)
+  longitude   Decimal     @map("vl_longitude") @db.Decimal(11, 7)
+  address     String      @map("ds_endereco") @db.MediumText
   userEvent   UserEvent[]
-  createdAt   DateTime?               @default(now()) @map("dt_criacao") @db.DateTime(0)
-  updatedAt   DateTime?               @updatedAt @map("dt_mudanca") @db.DateTime(0)
-  location    Unsupported("GEOMETRY") @map("lc_localizacao")
+  createdAt   DateTime?   @default(now()) @map("dt_criacao") @db.DateTime(0)
+  updatedAt   DateTime?   @updatedAt @map("dt_mudanca") @db.DateTime(0)
 
   @@index([idCreator], map: "idx_evento_id_criador")
   @@map("tbl_evento")

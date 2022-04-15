@@ -1,4 +1,5 @@
 import { Prisma, PrismaClient } from '@prisma/client'
+import { startOfHour, format } from 'date-fns'
 
 import { prisma } from '@common/database'
 import { OmitDbAttrs } from '@common/types/omit-db-attrs.type'
@@ -87,9 +88,12 @@ export class EventRepository {
     try {
       const geoPoints = `ST_GeomFromText('POINT(${latitude} ${longitude})', 4326)`
 
+      const formatedStartDate = format(startOfHour(new Date(startAt)), 'yyyy-MM-dd hh:mm:ss')
+      const formatedEndDate = format(startOfHour(new Date(endsAt)), 'yyyy-MM-dd hh:mm:ss')
+
       await this.prisma.$executeRaw`
         INSERT INTO tbl_evento (ds_nome, ds_descricao, dt_inicio, dt_fim, id_criador, lc_localizacao) 
-        VALUES (${name}, ${description}, ${startAt.toISOString()}, ${endsAt.toISOString()}, ${idCreator}, ${geoPoints})
+        VALUES (${name}, ${description}, ${formatedStartDate}, ${formatedEndDate}, ${idCreator}, ${geoPoints})
       `
 
       const createdEvent = await this.prisma.$queryRaw<Event>`
