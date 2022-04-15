@@ -14,8 +14,8 @@ import { Creator, User } from '@modules/users/models'
 import { Event } from '../models'
 
 export interface Location {
-  latitude: number
-  longitude: number
+  latitude: Prisma.Decimal
+  longitude: Prisma.Decimal
 }
 
 export type JoinedEventCreator = Event & {

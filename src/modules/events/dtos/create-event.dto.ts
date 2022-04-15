@@ -1,3 +1,4 @@
+import { Prisma } from '@prisma/client'
 import {
   IsDateString,
   IsLatitude,
@@ -25,10 +26,10 @@ export class CreateEventDto {
   endsAt!: string
 
   @IsLatitude()
-  latitude!: number
+  latitude!: Prisma.Decimal
 
   @IsLongitude()
-  longitude!: number
+  longitude!: Prisma.Decimal
 
   @IsString()
   address!: string
