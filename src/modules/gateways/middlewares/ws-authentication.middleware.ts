@@ -37,6 +37,7 @@ export const wsAuthenticationMiddleware = (
     const validatedToken = jwt.verify(token, JWT_SECRET, { issuer: 'metafy' }) as JUser
 
     socket.data = validatedToken
+    next()
   } catch (err) {
     console.warn('Token is invalid or expired', err)
     return next(BadRequestError('You must give a valid and not expired token!'))
