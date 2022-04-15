@@ -14,8 +14,7 @@ import { Creator, User } from '@modules/users/models'
 import { Event, Location } from '../models'
 
 export type JoinedEventCreator = Event & {
-  creator: Pick<Creator, 'rating'>
-  user: Omit<User, 'password'>
+  creator: Pick<Creator, 'rating'> & Pick<User, 'id' | 'avatarUrl' | 'name'>
 }
 
 function serializePrismaEvent(
@@ -26,14 +25,16 @@ function serializePrismaEvent(
   }
 ): JoinedEventCreator {
   const { creator, ...eventInput } = event
-  const { password, ...userWithoutPassword } = creator.user
+  const { id: userId, name: userName, avatarUrl: userAvatar } = creator.user
 
   return {
-    user: userWithoutPassword,
+    ...eventInput,
     creator: {
-      rating: creator.rating
-    },
-    ...eventInput
+      rating: creator.rating,
+      id: userId,
+      name: userName,
+      avatarUrl: userAvatar
+    }
   }
 }
 
@@ -57,7 +58,7 @@ export class EventRepository {
   }): Promise<JoinedEventCreator[]> {
     const events = await this.prisma.event.findMany({
       where,
-      include: { creator: { select: { rating: true }, include: { user: true } } },
+      include: { creator: { include: { user: true } } },
       skip: limit * (page - 1),
       take: limit
     })
