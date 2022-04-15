@@ -17,7 +17,7 @@ export const authenticationMiddleware: preHandlerAsyncHookHandler = async (req, 
   const splittedHeader = authHeader.split(' ')
 
   if (!splittedHeader[1]) {
-    req.log.warn(`User doesn't provided the token, just the prefix`)
+    req.log.warn('Token is malformed')
     return rep.status(400).send({ message: 'The given token is malformed!' })
   }
 
