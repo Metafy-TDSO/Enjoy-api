@@ -6,6 +6,7 @@ import {
   IsString,
   IsUrl,
   Matches,
+  Max,
   MaxLength
 } from 'class-validator'
 
@@ -34,6 +35,7 @@ export class SignUpDto {
   confirmPassword!: string
 
   @IsPhoneNumber('BR', { message: 'Insert a valid phone!' })
+  @Max(11)
   phone!: string
 
   @IsUrl({}, { message: 'Insert a valid image url!' })
