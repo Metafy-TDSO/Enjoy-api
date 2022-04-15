@@ -84,11 +84,11 @@ export class EventRepository {
     const foundNearEvents = await this.prisma.$queryRaw<Array<{ id: number; distance: number }>>`
       SELECT id_evento AS id, ( 6371 * 
       ACOS( 
-          COS( RADIANS( latitude ) ) * 
+          COS( RADIANS( vl_latitude ) ) * 
           COS( RADIANS( ${latitude} ) ) * 
           COS( RADIANS( ${longitude} ) - 
-          RADIANS( longitude ) ) + 
-          SIN( RADIANS( latitude ) ) * 
+          RADIANS( vl_longitude ) ) + 
+          SIN( RADIANS( vl_latitude ) ) * 
           SIN( RADIANS( ${latitude}) ) 
       ) ) AS distance
       FROM 
