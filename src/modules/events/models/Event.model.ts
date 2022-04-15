@@ -5,8 +5,10 @@ export interface Event {
   rating?: number | null
   startAt: Date
   endsAt: Date
+  latitude: number
+  longitude: number
+  address: string
   idCreator: number
   createdAt?: Date | null
   updatedAt?: Date | null
-  location?: number
 }
