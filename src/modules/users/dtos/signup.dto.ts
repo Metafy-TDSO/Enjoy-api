@@ -35,7 +35,7 @@ export class SignUpDto {
   confirmPassword!: string
 
   @IsPhoneNumber('BR', { message: 'Insert a valid phone!' })
-  @Max(11)
+  @MaxLength(11)
   phone!: string
 
   @IsUrl({}, { message: 'Insert a valid image url!' })
