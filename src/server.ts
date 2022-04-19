@@ -1,6 +1,5 @@
 import { app } from './app'
-import { PORT } from './common/constants/envs'
 
-app.listen(PORT, err => {
+app.listen(process.env.PORT || 3000, err => {
   if (err) throw err
 })
