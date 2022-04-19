@@ -28,6 +28,10 @@ app.register(cors, { allowedHeaders: '*' })
 app.register(helmet)
 app.register(socketio, { cors: { allowedHeaders: '*' } })
 
+app.get('/', (_req, rep) => {
+  rep.status(200).send({ ok: true })
+})
+
 app.register(userRouter, { prefix: '/users' })
 app.register(creatorRouter, { prefix: '/creator' })
 app.register(eventRouter, { prefix: '/events' })
