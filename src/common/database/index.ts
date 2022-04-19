@@ -1,3 +1,7 @@
 import { PrismaClient } from '@prisma/client'
 
-export const prisma = new PrismaClient({ log: ['query', 'info', 'warn', 'error'] })
+import { IS_PROD } from '@common/constants/envs'
+
+export const prisma = new PrismaClient({
+  log: !IS_PROD ? ['query', 'info', 'warn', 'error'] : ['error']
+})
