@@ -13,8 +13,14 @@ export class FindManyEventsController {
   constructor(private findManyEventsUseCase: FindManyEventsUseCase) {}
 
   async handle(request: FastifyRequest, reply: FastifyReply): Promise<FastifyReply> {
+    const { name, ...otherFields } = request.query as Record<keyof FindManyEventsDto, string>
+
+    const convertedProperties = Object.fromEntries(
+      Object.entries(otherFields).map(([key, value]) => [key, +value])
+    )
+
     try {
-      const dto = plainToInstance(FindManyEventsDto, request.query)
+      const dto = plainToInstance(FindManyEventsDto, { name, ...convertedProperties })
       await validateOrReject(dto)
     } catch (err) {
       const invalidArguments = formatValidationErrors(err as ValidationError[])
@@ -26,7 +32,10 @@ export class FindManyEventsController {
     }
 
     try {
-      const result = await this.findManyEventsUseCase.execute(request.query as FindManyEventsDto)
+      const result = await this.findManyEventsUseCase.execute({
+        name,
+        ...convertedProperties
+      } as FindManyEventsDto)
 
       return await reply.status(200).send(result)
     } catch (err) {
