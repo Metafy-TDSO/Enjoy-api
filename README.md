@@ -7,8 +7,9 @@ Esse app representa o serviço de backend principal da aplicação iFindy, desen
 - [Typescript](https://www.typescriptlang.org/);
 - [Fastify](https://www.fastify.io/);
 - [Docker](https://www.docker.com/);
-- [Prisma.io](https://www.prisma.io/)
-- [MySQL](https://www.mysql.com/)
+- [Prisma.io](https://www.prisma.io/);
+- [MySQL](https://www.mysql.com/);
+- [Swagger](https://swagger.io).
 
 
 ## 📃 Documentação
