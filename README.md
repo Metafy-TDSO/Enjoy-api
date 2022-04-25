@@ -11,6 +11,14 @@ Esse app representa o serviço de backend principal da aplicação iFindy, desen
 - [MySQL](https://www.mysql.com/)
 
 
+## 📃 Documentação
+A documentação das rotas **REST** disponíveis, assim como seus parâmetros, respostas e modelos podem ser acessados através do _endpoint_ [documentation](http://localhost:3000/documentation) ou pela [documentação em produção](https://eventos-v1-api.herokuapp.com/documentation).
+
+## 🧪 Testes
+Você também pode visualizar os testes realizados na [documentação de testes da api](./docs//api-tests.md).
+
+<br />
+
 ## 🤔 Como executar?
 Há dois meios possíveis de executar essa aplicação, a primeira utilizando o Docker, uma ferramenta de containerização de serviços, ou localmente no seu sistema, os tópicos abaixo descreverão como realizar essas duas alterantivas:
 
@@ -46,11 +54,6 @@ As configurações padrões da aplicação e do banco MySQL estão definidas no 
 5. Rode `yarn dev` para rodar a aplicação no ambiente de desenvolvimento; ✔️
 6. Rode `yarn build` para criar a versão buildada do app na pasta **dist**; ✔️
 7. Rode `yarn start` para rodar o app buildado como se fosse em um ambiente de produção; ✔️
-
-<br />
-
-## 📃 Documentação
-A documentação das rotas REST disponíveis, assim como seus parâmetros, respostas e modelos podem ser acessados através do _endpoint_ [documentation](http://localhost:3000/documentation) ou pela [documentação em produção](https://eventos-v1-api.herokuapp.com/documentation).
 
 ----
 
