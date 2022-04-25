@@ -7,6 +7,7 @@ import cors from 'fastify-cors'
 import helmet from 'fastify-helmet'
 import socketio from 'fastify-socket.io'
 import fastifySwagger from 'fastify-swagger'
+import './public/documentation.json'
 
 import { WsGateway } from '@modules/gateways'
 import { wsAuthenticationMiddleware } from '@modules/gateways/middlewares'
