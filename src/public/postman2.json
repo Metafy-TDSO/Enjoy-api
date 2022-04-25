@@ -1,0 +1,601 @@
+{
+	"info": {
+		"_postman_id": "a61348b4-82d8-49f9-9785-e9c11e10668e",
+		"name": "iFindy",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"guivpw68@gmail.com\",\r\n  \"password\": \"Guigui123\"\r\n}"
+						},
+						"url": "{{Server Http}}/users/login",
+						"description": "Autentica um usuário utilizando com a senha e e-mail fornecidos"
+					},
+					"response": [
+						{
+							"name": "Response_200",
+							"originalRequest": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"email\": \"guivpw68@gmail.com\",\r\n  \"password\": \"Guigui123\"\r\n}"
+								},
+								"url": "{{Server Http}}/users/login",
+								"description": "Autentica um usuário utilizando com a senha e e-mail fornecidos"
+							},
+							"code": 200,
+							"_postman_previewlanguage": "Text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n  \"user\": {\r\n    \"id\": 1,\r\n    \"name\": \"Guilherme\",\r\n    \"avatarUrl\": null,\r\n    \"email\": \"guivpw68@gmail.com\",\r\n    \"birth\": \"2002-02-08T00:00:00.000Z\",\r\n    \"phone\": \"11988900772\",\r\n    \"createdAt\": \"2022-04-19T23:36:52.000Z\",\r\n    \"updatedAt\": \"2022-04-19T23:36:52.000Z\"\r\n  },\r\n  \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6Ikd1aWxoZXJtZSIsImVtYWlsIjoiZ3VpdnB3NjhAZ21haWwuY29tIiwiYXZhdGFyVXJsIjpudWxsLCJpYXQiOjE2NTA5MTg0NTcsImV4cCI6MTY1MTUyMzI1NywiaXNzIjoibWV0YWZ5In0.wFa0y9AKX6hVG2_a60Vf18L4Oy6JXgp4v29wJ4Z5mI1\"\r\n}"
+						}
+					]
+				},
+				{
+					"name": "Signup",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Guilherme\",\r\n  \"email\": \"guivpw68@gmail.com\",\r\n  \"password\": \"Guigui123\",\r\n  \"confirmPassword\": \"Guigui123\",\r\n  \"phone\": \"11988900999\",\r\n  \"birth\": \"2002-02-08\"\r\n}"
+						},
+						"url": "{{Server Http}}/users/signup",
+						"description": "Realiza a criação de um usuário."
+					},
+					"response": [
+						{
+							"name": "Response_200",
+							"originalRequest": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"name\": \"Guilherme\",\r\n  \"email\": \"guivpw68@gmail.com\",\r\n  \"password\": \"Guigui123\",\r\n  \"confirmPassword\": \"Guigui123\",\r\n  \"phone\": \"11988900999\",\r\n  \"birth\": \"2002-02-08\"\r\n}"
+								},
+								"url": "{{Server Http}}/users/signup",
+								"description": "Realiza a criação de um usuário."
+							},
+							"code": 200,
+							"_postman_previewlanguage": "Text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n  \"user\": {\r\n    \"id\": 1,\r\n    \"name\": \"Guilherme\",\r\n    \"email\": \"guivpw68@gmail.com\",\r\n    \"birth\": \"2002-02-08T00:00:00.000Z\",\r\n    \"phone\": \"11988900772\",\r\n    \"createdAt\": \"2022-04-20T20:48:55.000Z\",\r\n    \"updatedAt\": \"2022-04-20T20:48:55.000Z\"\r\n  },\r\n  \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6Ikd1aWxoZXJtZSIsImVtYWlsIjoiZ3VpemluQGdtYWlsLmNvbSIsImF2YXRhclVybCI6bnVsbCwiaWF0IjoxNjUwOTE5NzM1LCJleHAiOjE2NTE1MjQ1MzUsImlzcyI6Im1ldGFmeSJ9.3In8Aag3NHUJmPSOWup1q9T91uc5S2ymniDklLDaAVA\"\r\n}"
+						}
+					]
+				},
+				{
+					"name": "Criar Criador de Eventos",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": {
+								"key": "Authorization",
+								"value": "{{token}}",
+								"in": "header"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{Server Http}}/users/:userId/creator",
+							"host": [
+								"{{Server Http}}"
+							],
+							"path": [
+								"users",
+								":userId",
+								"creator"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "1",
+									"description": "Id do usuário"
+								}
+							]
+						},
+						"description": "Realiza a associação de um usuário a um criador de eventos caso esse já não exista."
+					},
+					"response": [
+						{
+							"name": "Response_200",
+							"originalRequest": {
+								"auth": {
+									"type": "apikey",
+									"apikey": {
+										"key": "Authorization",
+										"value": "{{token}}",
+										"in": "header"
+									}
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{Server Http}}/users/:userId/creator",
+									"host": [
+										"{{Server Http}}"
+									],
+									"path": [
+										"users",
+										":userId",
+										"creator"
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "1",
+											"description": "Id do usuário"
+										}
+									]
+								},
+								"description": "Realiza a associação de um usuário a um criador de eventos caso esse já não exista."
+							},
+							"code": 200,
+							"_postman_previewlanguage": "Text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n  \"id\": 1,\r\n  \"idUser\": 1,\r\n  \"rating\": null,\r\n  \"createdAt\": \"2022-04-20T20:00:00.000Z\",\r\n  \"updatedAt\": \"2022-04-20T20:00:00.000Z\"\r\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Events",
+			"item": [
+				{
+					"name": "Create Event",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": {
+								"key": "Authorization",
+								"value": "{{token}}",
+								"in": "header"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Eventop\",\r\n  \"description\": \"Muito legal\",\r\n  \"startAt\": \"2022-04-22T07:00:00.000Z\",\r\n  \"endsAt\": \"2022-04-22T08:00:00.000Z\",\r\n  \"latitude\": -23.4058165,\r\n  \"longitude\": -46.3446359,\r\n  \"address\": \"Avenida São Lucas, 395, Nova Arujá, Arujá\"\r\n}"
+						},
+						"url": {
+							"raw": "{{Server Http}}/creator/:idCreator/event",
+							"host": [
+								"{{Server Http}}"
+							],
+							"path": [
+								"creator",
+								":idCreator",
+								"event"
+							],
+							"variable": [
+								{
+									"key": "idCreator",
+									"value": "1"
+								}
+							]
+						},
+						"description": "Realiza a criação de um evento como um criador de eventos."
+					},
+					"response": [
+						{
+							"name": "Response_200",
+							"originalRequest": {
+								"auth": {
+									"type": "apikey",
+									"apikey": {
+										"key": "Authorization",
+										"value": "{{token}}",
+										"in": "header"
+									}
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"name\": \"Eventop\",\r\n  \"description\": \"Muito legal\",\r\n  \"startAt\": \"2022-04-22T07:00:00.000Z\",\r\n  \"endsAt\": \"2022-04-22T08:00:00.000Z\",\r\n  \"latitude\": -23.4058165,\r\n  \"longitude\": -46.3446359,\r\n  \"address\": \"Avenida São Lucas, 395, Nova Arujá, Arujá\"\r\n}"
+								},
+								"url": {
+									"raw": "{{Server Http}}/creator/:idCreator/event",
+									"host": [
+										"{{Server Http}}"
+									],
+									"path": [
+										"creator",
+										":idCreator",
+										"event"
+									],
+									"variable": [
+										{
+											"key": "idCreator",
+											"value": "1"
+										}
+									]
+								},
+								"description": "Realiza a criação de um evento como um criador de eventos."
+							},
+							"code": 200,
+							"_postman_previewlanguage": "Text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n  \"id\": 1,\r\n  \"name\": \"Eventop\",\r\n  \"description\": \"Muito legal\",\r\n  \"address\": \"Avenida São Lucas, 395, Nova Arujá, Arujá\",\r\n  \"idCreator\": 1,\r\n  \"latitude\": \"-23.4058165\",\r\n  \"longitude\": \"-46.3446359\",\r\n  \"rating\": null,\r\n  \"endsAt\": \"2022-04-22T08:00:00.000Z\",\r\n  \"startAt\": \"2022-04-22T07:00:00.000Z\",\r\n  \"createdAt\": \"2022-04-20T00:00:00.000Z\",\r\n  \"updatedAt\": \"2022-04-20T00:00:00.000Z\"\r\n}"
+						}
+					]
+				},
+				{
+					"name": "Find many Events",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{Server Http}}/events?page=1&limit=50&name=top&idCreator=1&latitude=-23.4058165&longitude=-46.3446359&kilometers=10&rating=2",
+							"host": [
+								"{{Server Http}}"
+							],
+							"path": [
+								"events"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1",
+									"description": "Número da página atual"
+								},
+								{
+									"key": "limit",
+									"value": "50",
+									"description": "Número de eventos a retornar"
+								},
+								{
+									"key": "name",
+									"value": "top",
+									"description": "Nome do evento ou de alguma parte sua"
+								},
+								{
+									"key": "idCreator",
+									"value": "1",
+									"description": "Número do criador do evento"
+								},
+								{
+									"key": "latitude",
+									"value": "-23.4058165",
+									"description": "Latitude a ser procurada, deve ser utilizado junto da longitude."
+								},
+								{
+									"key": "longitude",
+									"value": "-46.3446359",
+									"description": "Longitude a ser procurada, deve ser utilizado junto da longitude."
+								},
+								{
+									"key": "kilometers",
+									"value": "10",
+									"description": "Define o raio em quilômetros que os eventos serão buscados."
+								},
+								{
+									"key": "rating",
+									"value": "2",
+									"description": "Avaliação mínima do evento"
+								}
+							]
+						},
+						"description": "Realiza a busca de vários eventos a partir do nome, id do criador ou avaliação mínima. \nTambém é possível realizar a busca de vários eventos num raio de tantos quilômetros."
+					},
+					"response": [
+						{
+							"name": "Response_200",
+							"originalRequest": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{Server Http}}/events?page=1&limit=50&name=top&idCreator=1&latitude=-23.4058165&longitude=-46.3446359&kilometers=10&rating=2",
+									"host": [
+										"{{Server Http}}"
+									],
+									"path": [
+										"events"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1",
+											"description": "Número da página atual"
+										},
+										{
+											"key": "limit",
+											"value": "50",
+											"description": "Número de eventos a retornar"
+										},
+										{
+											"key": "name",
+											"value": "top",
+											"description": "Nome do evento ou de alguma parte sua"
+										},
+										{
+											"key": "idCreator",
+											"value": "1",
+											"description": "Número do criador do evento"
+										},
+										{
+											"key": "latitude",
+											"value": "-23.4058165",
+											"description": "Latitude a ser procurada, deve ser utilizado junto da longitude."
+										},
+										{
+											"key": "longitude",
+											"value": "-46.3446359",
+											"description": "Longitude a ser procurada, deve ser utilizado junto da longitude."
+										},
+										{
+											"key": "kilometers",
+											"value": "10",
+											"description": "Define o raio em quilômetros que os eventos serão buscados."
+										},
+										{
+											"key": "rating",
+											"value": "2",
+											"description": "Avaliação mínima do evento"
+										}
+									]
+								},
+								"description": "Realiza a busca de vários eventos a partir do nome, id do criador ou avaliação mínima. \nTambém é possível realizar a busca de vários eventos num raio de tantos quilômetros."
+							},
+							"code": 200,
+							"_postman_previewlanguage": "Text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "[\r\n  {\r\n    \"id\": 1,\r\n    \"name\": \"Eventop\",\r\n    \"description\": \"Muito legal\",\r\n    \"address\": \"Avenida São Lucas, 395, Nova Arujá, Arujá\",\r\n    \"idCreator\": 1,\r\n    \"latitude\": \"-23.4058165\",\r\n    \"longitude\": \"-46.3446359\",\r\n    \"rating\": null,\r\n    \"endsAt\": \"2022-04-22T08:00:00.000Z\",\r\n    \"startAt\": \"2022-04-22T07:00:00.000Z\",\r\n    \"createdAt\": \"2022-04-20T00:00:00.000Z\",\r\n    \"updatedAt\": \"2022-04-20T00:00:00.000Z\",\r\n    \"creator\": {\r\n      \"rating\": null,\r\n      \"user\": {\r\n        \"id\": 1,\r\n        \"name\": \"Guilherme\",\r\n        \"avatarUrl\": null\r\n      }\r\n    }\r\n  }\r\n]"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Websocket",
+			"item": [
+				{
+					"name": "Eventos próximos em tempo real",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{Server Websocket}}/?server:event:search-near=%7B%7D&client:event:search-near=%7B%20%22latitude%22%3A%20-23.4058165%20%2C%20%22longitude%22%3A%20-46.3446359%20%7D",
+							"host": [
+								"{{Server Websocket}}"
+							],
+							"path": [
+								""
+							],
+							"query": [
+								{
+									"key": "server:event:search-near",
+									"value": "%7B%7D",
+									"description": "Evento a ser escutado antes de realizar o envio da mensagem."
+								},
+								{
+									"key": "client:event:search-near",
+									"value": "%7B%20%22latitude%22%3A%20-23.4058165%20%2C%20%22longitude%22%3A%20-46.3446359%20%7D",
+									"description": "Evento a ser emitido para o servidor."
+								}
+							]
+						},
+						"description": "Retorna eventos baseados na localização do usuário num raio de 10 quilômetro por padrão.\n\nObs: Essa chamada deve ser feita via websocket não https. Caso você tente executar essa chamada, ela irá falhar.\nÉ recomendado utilizar alguma ferramenta externa para testar essa rota, como o Postman por exemplo."
+					},
+					"response": [
+						{
+							"name": "Response_200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{Server Websocket}}/?server:event:search-near=%7B%7D&client:event:search-near=%7B%20%22latitude%22%3A%20-23.4058165%20%2C%20%22longitude%22%3A%20-46.3446359%20%7D",
+									"host": [
+										"{{Server Websocket}}"
+									],
+									"path": [
+										""
+									],
+									"query": [
+										{
+											"key": "server:event:search-near",
+											"value": "%7B%7D",
+											"description": "Evento a ser escutado antes de realizar o envio da mensagem."
+										},
+										{
+											"key": "client:event:search-near",
+											"value": "%7B%20%22latitude%22%3A%20-23.4058165%20%2C%20%22longitude%22%3A%20-46.3446359%20%7D",
+											"description": "Evento a ser emitido para o servidor."
+										}
+									]
+								},
+								"description": "Retorna eventos baseados na localização do usuário num raio de 10 quilômetro por padrão.\n\nObs: Essa chamada deve ser feita via websocket não https. Caso você tente executar essa chamada, ela irá falhar.\nÉ recomendado utilizar alguma ferramenta externa para testar essa rota, como o Postman por exemplo."
+							},
+							"code": 200,
+							"_postman_previewlanguage": "Text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n  \"id\": 1,\r\n  \"name\": \"Eventop\",\r\n  \"description\": \"Muito legal\",\r\n  \"address\": \"Avenida São Lucas, 395, Nova Arujá, Arujá\",\r\n  \"idCreator\": 1,\r\n  \"latitude\": \"-23.4058165\",\r\n  \"longitude\": \"-46.3446359\",\r\n  \"rating\": null,\r\n  \"endsAt\": \"2022-04-22T08:00:00.000Z\",\r\n  \"startAt\": \"2022-04-22T07:00:00.000Z\",\r\n  \"createdAt\": \"2022-04-20T00:00:00.000Z\",\r\n  \"updatedAt\": \"2022-04-20T00:00:00.000Z\"\r\n}"
+						}
+					]
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": {
+			"token": "<<token>>",
+			"scope": ""
+		}
+	},
+	"variable": [
+		{
+			"key": "Server Http",
+			"value": "https://eventos-v1-api.herokuapp.com"
+		},
+		{
+			"key": "Server Websocket",
+			"value": "ws://eventos-v1-api.herokuapp.com"
+		},
+		{
+			"key": "Server Http",
+			"value": "http://localhost:3000"
+		},
+		{
+			"key": "Server Websocket1",
+			"value": "ws://localhost:3000"
+		}
+	]
+}

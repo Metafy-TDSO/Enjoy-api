@@ -8,6 +8,7 @@ import helmet from 'fastify-helmet'
 import socketio from 'fastify-socket.io'
 import fastifySwagger from 'fastify-swagger'
 import './public/documentation.json'
+import './public/postman2.json'
 
 import { WsGateway } from '@modules/gateways'
 import { wsAuthenticationMiddleware } from '@modules/gateways/middlewares'
@@ -28,7 +29,7 @@ export const app = fastify({
   }
 })
 
-app.register(cors, { allowedHeaders: '*' })
+app.register(cors, { allowedHeaders: '*', credentials: false, origin: '*', strictPreflight: false })
 app.register(socketio, { cors: { allowedHeaders: '*' } })
 app.register(helmet, {
   contentSecurityPolicy: {
