@@ -50,7 +50,7 @@ As configurações padrões da aplicação e do banco MySQL estão definidas no 
 <br />
 
 ## 📃 Documentação
-A documentação das rotas REST disponíveis, assim como seus parâmetros, respostas e modelos podem ser acessados através do _endpoint_ [/document](http://localhost:3000/document) ou pela [documentação em produção](https://eventos-v1-api.herokuapp.com/document)
+A documentação das rotas REST disponíveis, assim como seus parâmetros, respostas e modelos podem ser acessados através do _endpoint_ [documentation](http://localhost:3000/documentation) ou pela [documentação em produção](https://eventos-v1-api.herokuapp.com/documentation).
 
 ----
 
