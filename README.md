@@ -36,8 +36,10 @@ Há dois meios possíveis de executar essa aplicação, a primeira utilizando o 
 3. Após a instalação das imagens do banco de dados e da aplicação, dois containers serão inicializados em sua máquina; ✔️
 4. A aplicação aplicará as migrações no banco de dados após sua inicialização
    - _Obs: caso a aplicação não funcione, experimente rodar o comando de criação novamente_; ✔️
-5. O banco de dados MySQL estará disponível para ser acessado localmente através [da url do Docker](./.env.example) na porta externa 3307.
-6. A aplicação estará disponível através da [porta 3333](http://localhost:3333).
+  
+O banco de dados MySQL estará disponível para ser acessado localmente através [da url do Docker](./.env.example) na porta externa 3307.
+
+A aplicação estará disponível através da [porta 3333](http://localhost:3333).
 
 As configurações padrões da aplicação e do banco MySQL estão definidas no arquivo [docker-compose.yml](./docker-compose.yml).
 
