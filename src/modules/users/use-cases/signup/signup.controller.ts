@@ -27,6 +27,10 @@ export class SignUpController {
       })
     }
 
+    if (input.password !== input.confirmPassword) {
+      return reply.status(400).send({ message: 'The passwords must be equal' })
+    }
+
     try {
       const result = await this.signUpUseCase.execute(input)
 
