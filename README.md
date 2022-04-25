@@ -41,8 +41,6 @@ Há dois meios possíveis de executar essa aplicação, a primeira utilizando o 
 
 As configurações padrões da aplicação e do banco MySQL estão definidas no arquivo [docker-compose.yml](./docker-compose.yml).
 
-<br />
-
 ### 🤖 Executando Localmente
 1. Tenha o **Node** e o **Yarn** instalados em sua máquina; ✔️
      - Obs: _O yarn precisa estar instalado na sua última versão, você pode instalá-lo com o NPM a partir do comando: `npm install --global yarn`_.
