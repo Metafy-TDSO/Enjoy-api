@@ -309,7 +309,7 @@
         "deprecated": false,
         "security": [
           {
-            "apiKey": []
+            "bearer": []
           }
         ],
         "x-operation-settings": {
@@ -377,7 +377,7 @@
         "deprecated": false,
         "security": [
           {
-            "apiKey": []
+            "bearer": []
           }
         ],
         "x-operation-settings": {
@@ -972,13 +972,8 @@
     "securitySchemes": {
       "bearer": {
         "type": "http",
-        "scheme": "bearer"
-      },
-      "apiKey": {
-        "type": "apiKey",
-        "name": "Authorization",
-        "in": "header",
-        "x-testValue": "{{token}}"
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
       }
     }
   },
