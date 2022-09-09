@@ -5,6 +5,7 @@ import {
   IsLongitude,
   IsNumberString,
   IsString,
+  IsUrl,
   MaxLength
 } from 'class-validator'
 
@@ -18,6 +19,9 @@ export class CreateEventDto {
   @IsString()
   @MaxLength(255)
   description!: string
+
+  @IsUrl()
+  imageUrl!: string
 
   @IsDateString()
   startAt!: string

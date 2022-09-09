@@ -14,6 +14,7 @@ export interface Event extends Location {
   endsAt: Date
   address: string
   idCreator: number
+  imageUrl: string
   createdAt?: Date | null
   updatedAt?: Date | null
 }

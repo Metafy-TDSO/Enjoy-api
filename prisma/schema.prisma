@@ -27,6 +27,7 @@ model Event {
   rating      Int?        @map("vl_avaliacao") @db.TinyInt
   startAt     DateTime    @map("dt_inicio") @db.DateTime(0)
   endsAt      DateTime    @map("dt_fim") @db.DateTime(0)
+  imageUrl    String      @map("ds_url_imagem") @db.VarChar(255)
   idCreator   Int         @map("id_criador")
   creator     Creator     @relation(fields: [idCreator], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_evento_criador")
   latitude    Decimal     @map("vl_latitude") @db.Decimal(11, 7)
