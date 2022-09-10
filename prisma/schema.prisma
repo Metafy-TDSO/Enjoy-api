@@ -48,7 +48,7 @@ model User {
   birth     DateTime    @map("dt_nascimento") @db.Date
   password  String      @map("ds_senha") @db.VarChar(72)
   avatarUrl String?     @map("im_avatar_url") @db.VarChar(200)
-  phone     String      @map("nr_telefone") @db.VarChar(11)
+  phone     String      @map("nr_telefone") @db.VarChar(13)
   creator   Creator?
   userEvent UserEvent[]
   createdAt DateTime?   @default(now()) @map("dt_criacao") @db.DateTime(0)
