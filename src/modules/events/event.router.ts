@@ -21,7 +21,7 @@ const createEventUseCase = new CreateEventUseCase(eventRepository, creatorReposi
 const findManyEventsUseCase = new FindManyEventsUseCase(eventRepository)
 
 export const eventRouter: FastifyPluginCallback = (app, _opts, done) => {
-  app.post('/', { preHandler: [authenticationMiddleware] }, (req, rep) =>
+  app.post('/:idCreator', { preHandler: [authenticationMiddleware] }, (req, rep) =>
     new CreateEventController(createEventUseCase).handle(req, rep)
   )
   app.get('/', (req, rep) => new FindManyEventsController(findManyEventsUseCase).handle(req, rep))

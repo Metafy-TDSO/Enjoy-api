@@ -38,7 +38,7 @@ export class SignUpController {
     } catch (err) {
       const { code, message } = err as HttpError
 
-      return reply.status(code ?? 400).send({
+      return await reply.status(code ?? 400).send({
         message: message || 'Unexpected error.'
       })
     }

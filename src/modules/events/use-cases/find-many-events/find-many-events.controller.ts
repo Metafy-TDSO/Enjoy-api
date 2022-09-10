@@ -35,7 +35,7 @@ export class FindManyEventsController {
       const result = await this.findManyEventsUseCase.execute({
         name,
         ...convertedProperties
-      } as FindManyEventsDto)
+      })
 
       return await reply.status(200).send(result)
     } catch (err) {
