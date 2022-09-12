@@ -9,7 +9,9 @@ import {
   CreateEventController,
   CreateEventUseCase,
   FindManyEventsController,
-  FindManyEventsUseCase
+  FindManyEventsUseCase,
+  FindEventByIdController,
+  FindEventByIdUseCase
 } from './use-cases'
 
 // Repositories
@@ -19,12 +21,14 @@ const creatorRepository = new CreatorRepository()
 // Use Cases
 const createEventUseCase = new CreateEventUseCase(eventRepository, creatorRepository)
 const findManyEventsUseCase = new FindManyEventsUseCase(eventRepository)
+const findEventByIdUseCase = new FindEventByIdUseCase(eventRepository)
 
 export const eventRouter: FastifyPluginCallback = (app, _opts, done) => {
   app.post('/:idCreator', { preHandler: [authenticationMiddleware] }, (req, rep) =>
     new CreateEventController(createEventUseCase).handle(req, rep)
   )
   app.get('/', (req, rep) => new FindManyEventsController(findManyEventsUseCase).handle(req, rep))
+  app.get('/:id', (req, rep) => new FindEventByIdController(findEventByIdUseCase).handle(req, rep))
 
   done()
 }
