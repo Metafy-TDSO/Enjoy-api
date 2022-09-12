@@ -21,6 +21,7 @@ const defaultFindManyEventsSelect: Prisma.EventSelect = {
   idCreator: true,
   latitude: true,
   longitude: true,
+  imageUrl: true,
   rating: true,
   endsAt: true,
   startAt: true,
