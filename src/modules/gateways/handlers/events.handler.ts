@@ -13,7 +13,12 @@ export class EventsHandler {
   public async searchCloseEvents(location: Location) {
     const { latitude, longitude } = location
 
-    const foundEvents = await this.findManyEventsUseCase.execute({ latitude, longitude })
+    const foundEvents = await this.findManyEventsUseCase.execute({
+      latitude,
+      longitude,
+      limit: 15,
+      kilometers: 10000
+    })
 
     this.socket.emit('server:event:search-near', foundEvents)
   }
