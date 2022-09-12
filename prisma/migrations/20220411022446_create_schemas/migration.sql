@@ -56,15 +56,3 @@ CREATE TABLE `tbl_usuario_evento` (
     INDEX `idx_usuario_evento_id_usuario`(`id_usuario`),
     PRIMARY KEY (`id_usuario`, `id_evento`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
--- AddForeignKey
-ALTER TABLE `tbl_criador` ADD CONSTRAINT `fk_criador_usuario` FOREIGN KEY (`id_usuario`) REFERENCES `tbl_usuario`(`id_usuario`) ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE `tbl_evento` ADD CONSTRAINT `fk_evento_criador` FOREIGN KEY (`id_criador`) REFERENCES `tbl_criador`(`id_criador`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
--- AddForeignKey
-ALTER TABLE `tbl_usuario_evento` ADD CONSTRAINT `fk_evento_usuario` FOREIGN KEY (`id_evento`) REFERENCES `tbl_evento`(`id_evento`) ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE `tbl_usuario_evento` ADD CONSTRAINT `fk_usuario_evento` FOREIGN KEY (`id_usuario`) REFERENCES `tbl_usuario`(`id_usuario`) ON DELETE CASCADE ON UPDATE CASCADE;
