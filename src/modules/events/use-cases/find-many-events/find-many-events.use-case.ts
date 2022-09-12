@@ -13,7 +13,7 @@ export class FindManyEventsUseCase {
     const {
       limit = 50,
       page = 1,
-      kilometers = 1000000000,
+      kilometers = 20,
       latitude,
       longitude,
       idCreator,
