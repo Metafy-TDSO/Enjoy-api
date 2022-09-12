@@ -4,7 +4,7 @@
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "tsc -p ./tsconfig.build.json",
-    "dev": "yarn prisma:generate && yarn nodemon --watch 'src/' --exec 'yarn ts-node -r tsconfig-paths/register --files src/server.ts' -e ts",
+    "dev": "yarn nodemon --watch 'src/' --exec 'yarn ts-node -r tsconfig-paths/register --files src/server.ts' -e ts",
     "start": "TS_NODE_BASEURL=./dist node -r tsconfig-paths/register dist/server.js",
     "typecheck": "tsc",
     "format": "prettier --write \"src/**/*.ts\"",

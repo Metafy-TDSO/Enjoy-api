@@ -1,1 +1,1 @@
-web: yarn prisma:generate && yarn start
+web: yarn start
