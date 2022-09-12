@@ -39,8 +39,11 @@ const defaultFindManyEventsSelect: Prisma.EventSelect = {
 export class EventRepository {
   private prisma: PrismaClient = prisma
 
-  async findById(id: number): Promise<Event | null> {
-    const event = await this.prisma.event.findUnique({ where: { id } })
+  async findById(
+    id: number,
+    select: Prisma.EventSelect = defaultFindManyEventsSelect
+  ): Promise<JoinedEventCreator | null> {
+    const event = await this.prisma.event.findUnique({ where: { id }, select })
 
     return event
   }
