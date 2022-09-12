@@ -16,7 +16,8 @@ export class EventsHandler {
     const foundEvents = await this.findManyEventsUseCase.execute({
       latitude,
       longitude,
-      limit: 15,
+      limit: 20,
+      page: 1,
       kilometers: 10000
     })
 

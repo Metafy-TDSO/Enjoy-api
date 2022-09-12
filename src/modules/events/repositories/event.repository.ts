@@ -79,11 +79,15 @@ export class EventRepository {
   async findAllEventsInRadius({
     kilometers = 10,
     userLocation: { latitude, longitude },
-    select = defaultFindManyEventsSelect
+    select = defaultFindManyEventsSelect,
+    limit = 20,
+    page = 1
   }: {
     kilometers?: number
     userLocation: Location
     select?: Prisma.EventSelect
+    page: number
+    limit: number
   }): Promise<JoinedEventCreator[]> {
     const foundNearEvents = await this.prisma.$queryRaw<Array<{ id: number; distance: number }>>`
       SELECT id_evento AS id, ( 6371 * 
@@ -104,7 +108,9 @@ export class EventRepository {
 
     const foundEvents = await this.prisma.event.findMany({
       where: { id: { in: eventIds } },
-      select
+      select,
+      skip: limit * (page - 1),
+      take: limit
     })
 
     return foundEvents

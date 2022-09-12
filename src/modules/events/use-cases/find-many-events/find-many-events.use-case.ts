@@ -25,7 +25,9 @@ export class FindManyEventsUseCase {
       const foundEvents = await this.eventRepository.findAllEventsInRadius({
         userLocation: { latitude, longitude },
         kilometers,
-        select
+        select,
+        limit,
+        page
       })
 
       return {
