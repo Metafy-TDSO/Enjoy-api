@@ -17,8 +17,6 @@ A documentação das rotas **REST** disponíveis, assim como seus parâmetros, r
 ## 🧪 Testes
 Você também pode visualizar os testes realizados na [documentação de testes da api](./docs//api-tests.md).
 
-<br />
-
 ## 🤔 Como executar?
 Há dois meios possíveis de executar essa aplicação, a primeira utilizando o Docker, uma ferramenta de containerização de serviços, ou localmente no seu sistema, os tópicos abaixo descreverão como realizar essas duas alterantivas:
 
