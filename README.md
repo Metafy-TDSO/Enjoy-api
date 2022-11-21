@@ -11,7 +11,6 @@ Esse app representa o serviço de backend principal da aplicação iFindy, desen
 - [MySQL](https://www.mysql.com/);
 - [Swagger](https://swagger.io).
 
-
 ## 📃 Documentação
 A documentação das rotas **REST** disponíveis, assim como seus parâmetros, respostas e modelos podem ser acessados através do _endpoint_ [documentation](http://localhost:3000/documentation) ou pela [documentação em produção](https://eventos-v1-api.herokuapp.com/documentation).
 
